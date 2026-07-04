@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recovery Physiotherapy Clinic</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-heart-pulse"></i>
+                <span>Recovery Physiotherapy</span>
+            </a>
+            <nav class="navbar">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#services" class="nav-link">Services</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                    <li><a href="#appointment" class="nav-link">Appointment</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <ul class="mobile-nav-list">
+            <li><a href="#home" class="mobile-nav-link">Home</a></li>
+            <li><a href="#services" class="mobile-nav-link">Services</a></li>
+            <li><a href="#about" class="mobile-nav-link">About</a></li>
+            <li><a href="#testimonials" class="mobile-nav-link">Testimonials</a></li>
+            <li><a href="#appointment" class="mobile-nav-link">Appointment</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Recovery Physiotherapy Clinic</h1>
+            <p class="hero-subtitle">Your journey to recovery starts here. Expert care for Spine, Sports, Neuro Rehabilitation and Nutrition Consultations</p>
+            <div class="hero-buttons">
+                <a href="#appointment" class="btn btn-primary">Book Appointment</a>
+                <a href="#services" class="btn btn-secondary">Our Services</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <a href="#services">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-subtitle">Comprehensive physiotherapy treatments tailored to your needs</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-spine"></i>
+                    </div>
+                    <h3 class="service-title">Spine Rehabilitation</h3>
+                    <p class="service-description">Specialized treatment for spinal conditions including back pain, neck pain, herniated discs, and post-surgical spine recovery. We use advanced techniques to restore mobility and reduce pain.</p>
+                    <ul class="service-list">
+                        <li>Spinal decompression therapy</li>
+                        <li>Postural correction</li>
+                        <li>Core strengthening</li>
+                        <li>Manual therapy</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h3 class="service-title">Sports Therapy</h3>
+                    <p class="service-description">Performance enhancement and injury recovery for athletes of all levels. From acute injury treatment to preventive conditioning, we help you get back in the game.</p>
+                    <ul class="service-list">
+                        <li>Sports injury rehabilitation</li>
+                        <li>Performance training</li>
+                        <li>Stretching programs</li>
+                        <li>Return-to-sport protocols</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="service-title">Neuro Rehabilitation</h3>
+                    <p class="service-description">Specialized care for neurological conditions affecting movement and function. Our team provides comprehensive rehabilitation for stroke, Parkinson's, MS, and other neurological disorders.</p>
+                    <ul class="service-list">
+                        <li>Balance training</li>
+                        <li>Gait re-education</li>
+                        <li>Motor function recovery</li>
+                        <li>Coordination exercises</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-apple-alt"></i>
+                    </div>
+                    <h3 class="service-title">Nutrition Consultations</h3>
+                    <p class="service-description">Personalized nutritional guidance to support your rehabilitation journey and overall wellness. Our expert dietician provides comprehensive meal planning and dietary counseling tailored to your specific needs.</p>
+                    <ul class="service-list">
+                        <li>Personalized diet plans</li>
+                        <li>Weight management</li>
+                        <li>Sports nutrition</li>
+                        <li>Meal planning for recovery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Meet Our Team</h2>
+                <p class="section-subtitle">Our experienced professionals dedicated to your recovery</p>
+            </div>
+            <div class="doctors-container">
+                <!-- Doctor 1 - Physiotherapist -->
+                <div class="doctor-card">
+                    <div class="">
+                        <div class="doctor-frame">
+                            <img src="{{ url_for('static', filename='crop_bhai.jpeg') }}" alt="Dr. Piyush Babariya" class="doctor-photo">
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Piyush Babariya</h3>
+                        <p class="doctor-role">Physiotherapist</p>
+                        <p class="doctor-description">Expert in spine rehabilitation and sports therapy with years of experience in helping patients recover from injuries and improve their mobility.</p>
+                    </div>
+                </div>
+                <!-- Doctor 2 - Physiotherapist -->
+                <div class="doctor-card">
+                    <div class="">
+                        <div class="doctor-frame">
+                            <img src="{{ url_for('static', filename='crop_bhabhi.jpeg') }}" alt="Dr. Viral Babariya" class="doctor-photo">
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. Viral Babariya</h3>
+                        <p class="doctor-role">Physiotherapist</p>
+                        <p class="doctor-description">Specialized in neuro rehabilitation and manual therapy, dedicated to providing personalized treatment plans for optimal recovery.</p>
+                    </div>
+                </div>
+                <!-- Doctor 3 - Dietician -->
+                <div class="doctor-card">
+                    <div class="">
+                        <div class="doctor-frame">
+                            <img src="{{ url_for('static', filename='crop_aishu.jpeg') }}" alt="Dt. Aishwariya Ambaliya" class="doctor-photo">
+                        </div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dt. Aishwariya Ambaliya</h3>
+                        <p class="doctor-role">Dietician</p>
+                        <p class="doctor-description">Expert in nutritional counseling and diet planning to support rehabilitation and overall health and wellness.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Our Patients Say</h2>
+                <p class="section-subtitle">Real stories from real patients on their road to recovery</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"After months of chronic back pain, I finally found relief at Recovery Physiotherapy. The team is professional, knowledgeable, and truly cares about their patients' well-being. I'm now pain-free and back to my active lifestyle!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <span>Spine Rehabilitation Patient</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"As a competitive athlete, I needed top-notch sports therapy to recover from my knee injury. The sports therapy program here is exceptional. The therapists understood my goals and helped me return to sports stronger than before!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <span>Sports Therapy Patient</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Following my stroke, I was worried about ever regaining my mobility. The neuro rehabilitation team at Recovery has been incredible. Their expertise and patience have given me hope and helped me reclaim my independence."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Robert Williams</h4>
+                            <span>Neuro Rehabilitation Patient</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Section -->
+    <section id="appointment" class="appointment">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Book an Appointment</h2>
+                <p class="section-subtitle">Take the first step towards your recovery. Schedule your consultation today.</p>
+            </div>
+            <div class="appointment-wrapper">
+                <div class="appointment-info">
+                    <h3>Why Choose Us?</h3>
+                    <ul class="appointment-benefits">
+                        <li><i class="fas fa-check"></i> Same-day appointments available</li>
+                        <li><i class="fas fa-check"></i> Free initial consultation</li>
+                        <li><i class="fas fa-check"></i> Flexible scheduling</li>
+                        <li><i class="fas fa-check"></i> Most insurance accepted</li>
+                        <li><i class="fas fa-check"></i> Easy online booking</li>
+                    </ul>
+                    <div class="appointment-contact">
+                        <p><i class="fas fa-phone"></i> Call us: 63520 71040</p>
+                        <p><i class="fas fa-envelope"></i> Email: drpiyushpt.gmailcom</p>
+                    </div>
+                </div>
+                <form class="appointment-form" id="appointmentForm">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+                        <span class="error-message" id="phoneError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="service">Service Required *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="spine">Spine Rehabilitation</option>
+                            <option value="sports">Sports Therapy</option>
+                            <option value="neuro">Neuro Rehabilitation</option>
+                            <option value="consultation">Nutrition Consultations</option>
+                            <option value="consultation">General Consultation</option>
+                        </select>
+                        <span class="error-message" id="serviceError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Preferred Date</label>
+                        <input type="date" id="date" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Additional Notes</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Tell us about your condition or any special requirements"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Book Appointment</button>
+                    <div class="form-success" id="formSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Thank you! Your appointment request has been submitted. We will contact you shortly to confirm.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contact Us</h2>
+                <p class="section-subtitle">We'd love to hear from you. Get in touch with us today.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Address</h3>
+                        <p>121, Times Shoppers, Opp. Sarthana Nature Park, Sarthana Jakatnaka, Surat, Gujarat.</p>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-phone"></i>
+                        <h3>Phone</h3>
+                        <p>63520 71040</p>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>drpiyushpt.gmail.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>Hours</h3>
+                        <p>Mon - Sat: 8:00 AM - 8:30 PM<br>Sunday:  8:00 AM - 1:00 PM</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/recovery__physio?igsh=MXZpanNjMTMxMGRnag==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="contact-name">Name</label>
+                            <input type="text" id="contact-name" name="name" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Email</label>
+                            <input type="email" id="contact-email" name="email" required placeholder="Your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-subject">Subject</label>
+                            <input type="text" id="contact-subject" name="subject" placeholder="Message subject">
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Message</label>
+                            <textarea id="contact-message" name="message" rows="5" required placeholder="Your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Map Placeholder -->
+             <a href="https://maps.app.goo.gl/yk4GcLav7jrrctiD9" target="_blank">
+                 <div class="map-container">
+                    <div class="map-placeholder">
+                        <i class="fas fa-map"></i>
+                        <p>Map View</p>
+                    </div>
+                </div>
+             </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <h3>Recovery Physiotherapy</h3>
+                    <p>Your trusted partner in spine, sports, neuro rehabilitation, and Nutrition Consultations. We're committed to helping you achieve your best possible recovery.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#appointment">Book Appointment</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h3>Our Services</h3>
+                    <ul>
+                        <li><a href="#services">Spine Rehabilitation</a></li>
+                        <li><a href="#services">Sports Therapy</a></li>
+                        <li><a href="#services">Neuro Rehabilitation</a></li>
+                        <li><a href="#services">Nutrition Consultations</a></li>
+                        <li><a href="#services">Manual Therapy</a></li>
+                        <li><a href="#services">Exercise Therapy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to our newsletter for health tips and updates.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" id="newsletter-email" placeholder="Your email" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <div class="newsletter-success" id="newsletterSuccess">
+                        <i class="fas fa-check-circle"></i>
+                        <p>Thank you for subscribing!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Recovery Physiotherapy Clinic. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

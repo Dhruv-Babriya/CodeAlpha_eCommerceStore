@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Recovery Physiotherapy</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+        }
+        
+        .data-section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .data-section.active {
+            display: block;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .section-header h2 {
+            color: #333;
+            font-size: 1.8rem;
+        }
+        
+        .data-count {
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            color: #333;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .data-table td {
+            color: #555;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .badge-spine {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .badge-sports {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .badge-neuro {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .badge-consultation {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+        
+        .back-link:hover {
+            opacity: 1;
+        }
+        
+        .refresh-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        
+        .refresh-btn:hover {
+            background: #5568d3;
+        }
+        
+        @media (max-width: 768px) {
+            .data-table {
+                font-size: 0.85rem;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 8px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Website</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-user-cog"></i> Admin Dashboard</h1>
+            <p>Recovery Physiotherapy Clinic - Data Management</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showSection('appointments')">
+                <i class="fas fa-calendar-check"></i> Appointments
+            </button>
+            <button class="tab-btn" onclick="showSection('contacts')">
+                <i class="fas fa-envelope"></i> Contact Messages
+            </button>
+            <button class="tab-btn" onclick="showSection('subscribers')">
+                <i class="fas fa-newspaper"></i> Newsletter Subscribers
+            </button>
+        </div>
+        
+        <!-- Appointments Section -->
+        <div id="appointments" class="data-section active">
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-alt"></i> Appointments</h2>
+                <div>
+                    <span class="data-count" id="appointmentCount">0</span>
+                    <button class="refresh-btn" onclick="loadData('appointments')">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            <div id="appointmentsTable"></div>
+        </div>
+        
+        <!-- Contacts Section -->
+        <div id="contacts" class="data-section">
+            <div class="section-header">
+                <h2><i class="fas fa-envelope-open"></i> Contact Messages</h2>
+                <div>
+                    <span class="data-count" id="contactCount">0</span>
+                    <button class="refresh-btn" onclick="loadData('contacts')">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            <div id="contactsTable"></div>
+        </div>
+        
+        <!-- Subscribers Section -->
+        <div id="subscribers" class="data-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Newsletter Subscribers</h2>
+                <div>
+                    <span class="data-count" id="subscriberCount">0</span>
+                    <button class="refresh-btn" onclick="loadData('subscribers')">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            <div id="subscribersTable"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Tab switching
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.data-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Deactivate all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            // Activate clicked tab
+            event.target.classList.add('active');
+        }
+        
+        // Load data from API
+        async function loadData(type) {
+            try {
+                let endpoint = '';
+                let tableContainer = '';
+                let countElement = '';
+                
+                switch(type) {
+                    case 'appointments':
+                        endpoint = '/api/appointments';
+                        tableContainer = 'appointmentsTable';
+                        countElement = 'appointmentCount';
+                        break;
+                    case 'contacts':
+                        endpoint = '/api/contacts';
+                        tableContainer = 'contactsTable';
+                        countElement = 'contactCount';
+                        break;
+                    case 'subscribers':
+                        endpoint = '/api/subscribers';
+                        tableContainer = 'subscribersTable';
+                        countElement = 'subscriberCount';
+                        break;
+                }
+                
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                
+                document.getElementById(countElement).textContent = data.length;
+                
+                if (data.length === 0) {
+                    document.getElementById(tableContainer).innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No ${type} found</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Render table based on type
+                let html = '<table class="data-table"><thead><tr>';
+                
+                if (type === 'appointments') {
+                    html += `
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                        <th>Submitted</th>
+                    </tr></thead><tbody>`;
+                    
+                    data.forEach(item => {
+                        const date = new Date(item.created_at);
+                        const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                        const serviceClass = 'badge-' + item.service;
+                        html += `
+                            <tr>
+                                <td>${item.id}</td>
+                                <td>${item.name}</td>
+                                <td>${item.email}</td>
+                                <td>${item.phone}</td>
+                                <td><span class="badge ${serviceClass}">${item.service}</span></td>
+                                <td>${item.date || 'Not specified'}</td>
+                                <td>${item.message || '-'}</td>
+                                <td>${formattedDate}</td>
+                            </tr>
+                        `;
+                    });
+                } else if (type === 'contacts') {
+                    html += `
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Submitted</th>
+                    </tr></thead><tbody>`;
+                    
+                    data.forEach(item => {
+                        const date = new Date(item.created_at);
+                        const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                        html += `
+                            <tr>
+                                <td>${item.id}</td>
+                                <td>${item.name}</td>
+                                <td>${item.email}</td>
+                                <td>${item.subject || '-'}</td>
+                                <td>${item.message}</td>
+                                <td>${formattedDate}</td>
+                            </tr>
+                        `;
+                    });
+                } else if (type === 'subscribers') {
+                    html += `
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Subscribed</th>
+                    </tr></thead><tbody>`;
+                    
+                    data.forEach(item => {
+                        const date = new Date(item.subscribed_at);
+                        const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                        html += `
+                            <tr>
+                                <td>${item.id}</td>
+                                <td>${item.email}</td>
+                                <td>${formattedDate}</td>
+                            </tr>
+                        `;
+                    });
+                }
+                
+                html += '</tbody></table>';
+                document.getElementById(tableContainer).innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+        
+        // Load all data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData('appointments');
+            loadData('contacts');
+            loadData('subscribers');
+        });
+    </script>
+</body>
+</html>
