@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+
+    <div class="logo">
+        <h2>🛒 CodeAlpha Store</h2>
+    </div>
+
+</header>
+
+<div class="checkout-container">
+
+    <h1>Checkout</h1>
+
+    <form id="checkoutForm">
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Full Name"
+            required
+        >
+
+        <input
+            type="text"
+            id="address"
+            placeholder="Shipping Address"
+            required
+        >
+
+        <input
+            type="tel"
+            id="phone"
+            placeholder="Phone Number"
+            required
+        >
+
+        <select id="payment">
+
+            <option>Cash On Delivery</option>
+
+            <option>UPI</option>
+
+            <option>Credit Card</option>
+
+            <option>Debit Card</option>
+
+        </select>
+
+        <h2 id="orderTotal"></h2>
+
+        <button type="submit">
+            Place Order
+        </button>
+
+    </form>
+
+</div>
+
+<script src="js/checkout.js"></script>
+
+</body>
+</html>

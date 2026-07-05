@@ -1,0 +1,126 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+display:flex;
+background:#f4f4f4;
+}
+
+.sidebar{
+width:230px;
+background:#222;
+height:100vh;
+padding:20px;
+}
+
+.sidebar h2{
+color:white;
+margin-bottom:30px;
+}
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+padding:12px;
+margin:5px 0;
+border-radius:5px;
+}
+
+.sidebar a:hover{
+background:#0077ff;
+}
+
+.content{
+flex:1;
+padding:40px;
+}
+
+.cards{
+display:flex;
+gap:25px;
+margin-top:30px;
+}
+
+.card{
+background:white;
+padding:30px;
+flex:1;
+border-radius:10px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
+text-align:center;
+}
+
+input,
+textarea{
+
+width:100%;
+
+padding:10px;
+
+margin:10px 0;
+
+}
+
+button{
+
+padding:10px 20px;
+
+background:#0077ff;
+
+color:white;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+table{
+
+width:100%;
+
+margin-top:30px;
+
+border-collapse:collapse;
+
+background:white;
+
+}
+
+table th,
+table td{
+
+padding:15px;
+
+border:1px solid #ddd;
+
+text-align:center;
+
+}
+
+.edit-btn{
+
+background:green;
+
+color:white;
+
+padding:6px 12px;
+
+margin-right:5px;
+
+}
+
+.delete-btn{
+
+background:red;
+
+color:white;
+
+padding:6px 12px;
+
+}

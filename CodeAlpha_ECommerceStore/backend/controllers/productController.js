@@ -1,13 +1,36 @@
 const Product = require("../models/Product");
 
+const normalizeProductData = (body = {}) => {
+    const normalized = { ...body };
+
+    if (!normalized.name && normalized.title) {
+        normalized.name = normalized.title;
+    }
+
+    if (!normalized.description && normalized.desc) {
+        normalized.description = normalized.desc;
+    }
+
+    if (!normalized.image && normalized.img) {
+        normalized.image = normalized.img;
+    }
+
+    return normalized;
+};
+
 // Add Product
 const addProduct = async (req, res) => {
     try {
-        const product = await Product.create(req.body);
+        const productData = normalizeProductData(req.body);
+        const product = await Product.create(productData);
         res.status(201).json(product);
     } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    console.error("Create Product Error:", error);
+
+    res.status(500).json({
+        message: error.message
+    });
+}
 };
 
 // Get All Products
@@ -30,8 +53,12 @@ const getProducts = async (req, res) => {
         res.json(products);
 
     } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    console.error("Create Product Error:", error);
+
+    res.status(500).json({
+        message: error.message
+    });
+}
 };
 
 // Get Single Product
@@ -50,12 +77,12 @@ const getProductById = async (req, res) => {
         res.json(product);
 
     } catch (error) {
+    console.error("Create Product Error:", error);
 
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
+    res.status(500).json({
+        message: error.message
+    });
+}
 
 };
 
@@ -72,19 +99,21 @@ const updateProduct = async (req, res) => {
             });
         }
 
-        Object.assign(product, req.body);
+        const productData = normalizeProductData(req.body);
+
+        Object.assign(product, productData);
 
         const updated = await product.save();
 
         res.json(updated);
 
     } catch (error) {
+    console.error("Create Product Error:", error);
 
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
+    res.status(500).json({
+        message: error.message
+    });
+}
 
 };
 
@@ -108,12 +137,12 @@ const deleteProduct = async (req, res) => {
         });
 
     } catch (error) {
+    console.error("Create Product Error:", error);
 
-        res.status(500).json({
-            message: error.message
-        });
-
-    }
+    res.status(500).json({
+        message: error.message
+    });
+}
 
 };
 

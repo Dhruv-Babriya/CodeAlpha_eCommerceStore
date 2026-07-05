@@ -12,12 +12,13 @@ const orderSchema = new mongoose.Schema(
         {
             product: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Product"
+                ref: "Product",
+                required: true
             },
 
             quantity: {
                 type: Number,
-                default: 1
+                required: true
             }
         }
     ],
@@ -34,17 +35,24 @@ const orderSchema = new mongoose.Schema(
 
     paymentMethod: {
         type: String,
-        default: "Cash On Delivery"
+        required: true
     },
 
     status: {
         type: String,
-        default: "Pending"
+        default: "Pending",
+        enum: [
+            "Pending",
+            "Processing",
+            "Shipped",
+            "Delivered"
+        ]
     }
+
 },
 {
-    timestamps: true
+    timestamps:true
 }
 );
 
-module.exports = mongoose.model("Order", orderSchema);
+module.exports = mongoose.model("Order",orderSchema);

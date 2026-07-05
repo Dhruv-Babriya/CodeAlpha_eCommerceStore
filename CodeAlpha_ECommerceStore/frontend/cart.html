@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        <h2>🛒 CodeAlpha Store</h2>
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+    </nav>
+
+</header>
+
+<div class="cart-container">
+
+    <h1>Shopping Cart</h1>
+
+    <div id="cart-items"></div>
+
+    <div class="cart-summary">
+
+        <h2 id="total-price">Total : ₹0</h2>
+
+        <button onclick="continueShopping()">
+            Continue Shopping
+        </button>
+
+        <button onclick="checkout()">
+            Proceed To Checkout
+        </button>
+
+    </div>
+
+</div>
+
+<script src="js/cart.js"></script>
+
+</body>
+</html>
