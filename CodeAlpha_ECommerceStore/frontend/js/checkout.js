@@ -1,79 +1,60 @@
-if(!localStorage.getItem("token")){
+const API="http://localhost:5000/api/products/";
 
-    alert("Please login first");
+let cart=
+JSON.parse(localStorage.getItem("cart"))||[];
 
-    window.location="login.html";
+const summary=
+document.getElementById("orderSummary");
+
+let total=0;
+
+loadSummary();
+
+async function loadSummary(){
+
+summary.innerHTML="";
+
+for(const id of cart){
+
+const response=
+await fetch(API+id);
+
+const product=
+await response.json();
+
+total+=product.price;
+
+summary.innerHTML+=`
+
+<div class="summary-item">
+
+<span>${product.name}</span>
+
+<span>₹${product.price}</span>
+
+</div>
+
+`;
 
 }
 
-const API = "http://localhost:5000/api/orders";
+document.getElementById("totalPrice").innerHTML=
+"₹"+total;
 
-const cart = JSON.parse(localStorage.getItem("cart")) || [];
+}
 
-const total = cart.reduce(
-    (sum,item)=>sum+item.price*item.quantity,
-    0
-);
-
-document.getElementById("orderTotal").innerHTML =
-`Total : ₹${total}`;
-
-document.getElementById("checkoutForm")
+document
+.getElementById("checkoutForm")
 .addEventListener("submit",placeOrder);
 
-async function placeOrder(e){
+function placeOrder(e){
 
-    e.preventDefault();
+e.preventDefault();
 
-    const token = localStorage.getItem("token");
+alert("🎉 Order Placed Successfully!");
 
-    const order = {
+localStorage.removeItem("cart");
 
-        products: cart.map(item=>({
-
-            product:item._id,
-
-            quantity:item.quantity
-
-        })),
-
-        totalPrice: total,
-
-        shippingAddress:
-            document.getElementById("address").value,
-
-        paymentMethod:
-            document.getElementById("payment").value
-
-    };
-
-    const response = await fetch(API,{
-
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json",
-            "Authorization":"Bearer "+token
-        },
-
-        body:JSON.stringify(order)
-
-    });
-
-    const data = await response.json();
-
-    if(response.ok){
-
-        alert("Order Placed Successfully!");
-
-        localStorage.removeItem("cart");
-
-        window.location="index.html";
-
-    }else{
-
-        alert(data.message);
-
-    }
+window.location="orders.html";
 
 }

@@ -1,100 +1,57 @@
-const API = "http://localhost:5000/api/products";
+const API="http://localhost:5000/api/products/";
 
-const id = localStorage.getItem("productId");
+const id=localStorage.getItem("productId");
 
-const container = document.getElementById("product-details");
+loadProduct();
 
 async function loadProduct(){
 
-    try{
+const response=await fetch(API+id);
 
-        const response = await fetch(`${API}/${id}`);
+const product=await response.json();
 
-        const product = await response.json();
+document.getElementById("productName").innerHTML=product.name;
 
-        container.innerHTML = `
+document.getElementById("productPrice").innerHTML="₹"+product.price;
 
-        <div class="product-box">
+document.getElementById("productDescription").innerHTML=product.description;
 
-            <img src="${product.image || "https://via.placeholder.com/350"}" alt="Product">
+document.getElementById("stockStatus").innerHTML=
 
-            <div class="product-info">
+product.stock>0?
 
-                <h1>${product.name || product.title || "Untitled Product"}</h1>
+"✅ In Stock":
 
-                <h2>₹${product.price ?? 0}</h2>
+"❌ Out of Stock";
 
-                <p>${product.description || product.desc || "No description available"}</p>
+document.getElementById("productImage").src=
 
-                <p><strong>Category:</strong> ${product.category || "Uncategorized"}</p>
-
-                <p><strong>Stock:</strong> ${product.stock ?? 0}</p>
-
-                <label>Quantity</label><br>
-
-                <input
-                    type="number"
-                    id="qty"
-                    value="1"
-                    min="1"
-                    max="${product.stock}"
-                >
-
-                <button onclick="addToCart()">
-                    Add To Cart
-                </button>
-
-                <button onclick="goHome()">
-                    Back To Home
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-
-        window.currentProduct = product;
-
-    }catch(error){
-
-        container.innerHTML = "<h2>Product not found.</h2>";
-
-    }
+"https://picsum.photos/600/500?random="+product._id;
 
 }
 
-function addToCart(){
+function addCart(){
 
-    const quantity = Number(document.getElementById("qty").value);
+let cart=
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+JSON.parse(localStorage.getItem("cart"))||[];
 
-    const existing = cart.find(item => item._id === currentProduct._id);
+cart.push(id);
 
-    if(existing){
+localStorage.setItem("cart",JSON.stringify(cart));
 
-        existing.quantity += quantity;
-
-    }else{
-
-        cart.push({
-            ...currentProduct,
-            quantity
-        });
-
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    alert("Product added to cart successfully!");
+alert("Added to Cart");
 
 }
 
-function goHome(){
+function wishlist(){
 
-    window.location = "index.html";
+alert("Added to Wishlist ❤️");
 
 }
 
-loadProduct();
+function buyNow(){
+
+window.location="checkout.html";
+
+}

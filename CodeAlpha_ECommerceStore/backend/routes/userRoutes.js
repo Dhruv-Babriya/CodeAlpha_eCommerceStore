@@ -5,8 +5,12 @@ const router = express.Router();
 const {
     registerUser,
     loginUser,
-    getProfile
-} = require("../controllers/userController");
+    getProfile,
+    updateProfile,
+    getUsers,
+    updateUser,
+    deleteUser
+}=require("../controllers/userController");
 
 const {
     protect
@@ -20,5 +24,13 @@ router.post("/login", loginUser);
 
 // Profile
 router.get("/profile", protect, getProfile);
+router.put("/profile", protect, updateProfile);
+
+// Users list
+router.get("/", getUsers);
+
+// Update/Delete user
+router.put("/:id", updateUser);
+router.delete("/:id", deleteUser);
 
 module.exports = router;

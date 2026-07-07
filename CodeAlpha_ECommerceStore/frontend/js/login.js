@@ -14,6 +14,12 @@ async function loginUser(e){
     const password =
         document.getElementById("password").value;
 
+    const btn=document.querySelector(".auth-btn");
+
+    btn.innerText="Please Wait...";
+
+    btn.classList.add("loading");
+    
     const response = await fetch(API,{
 
         method:"POST",
@@ -33,17 +39,61 @@ async function loginUser(e){
 
     const data = await response.json();
 
+    btn.innerText = "Login";
+
+    btn.classList.remove("loading");
+
     if(response.ok){
 
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("userName", data.name);
-    localStorage.setItem("isAdmin", data.isAdmin);
+    localStorage.setItem("token",data.token);
+    localStorage.setItem("userName",data.name);
 
-    window.location = "index.html";
+    showToast("Login Successful!");
+
+    setTimeout(()=>{
+
+        window.location="index.html";
+
+    },1000);
+
 }else{
 
-        alert(data.message);
+    showToast(data.message,true);
 
-    }
+}
+
+}
+
+function togglePassword(){
+
+const password=document.getElementById("password");
+
+if(password.type==="password"){
+
+password.type="text";
+
+}else{
+
+password.type="password";
+
+}
+
+}
+
+function showToast(message,isError=false){
+
+const toast=document.createElement("div");
+
+toast.className=isError?"toast error":"toast";
+
+toast.innerText=message;
+
+document.body.appendChild(toast);
+
+setTimeout(()=>{
+
+toast.remove();
+
+},3000);
 
 }

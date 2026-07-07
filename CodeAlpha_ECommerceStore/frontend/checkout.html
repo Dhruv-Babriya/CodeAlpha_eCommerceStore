@@ -1,72 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Checkout</title>
+
+<link rel="stylesheet" href="css/style.css">
+
 </head>
+
 <body>
 
 <header>
 
-    <div class="logo">
-        <h2>🛒 CodeAlpha Store</h2>
-    </div>
+<div class="logo">
+<h2>🛒 CodeAlpha Store</h2>
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="cart.html">Cart</a>
+<a href="orders.html">Orders</a>
+
+</nav>
 
 </header>
 
-<div class="checkout-container">
+<section class="checkout-page">
 
-    <h1>Checkout</h1>
+<div class="checkout-form">
 
-    <form id="checkoutForm">
+<h2>Shipping Address</h2>
 
-        <input
-            type="text"
-            id="name"
-            placeholder="Full Name"
-            required
-        >
+<form id="checkoutForm">
 
-        <input
-            type="text"
-            id="address"
-            placeholder="Shipping Address"
-            required
-        >
+<input
+type="text"
+id="fullname"
+placeholder="Full Name"
+required>
 
-        <input
-            type="tel"
-            id="phone"
-            placeholder="Phone Number"
-            required
-        >
+<input
+type="email"
+id="email"
+placeholder="Email Address"
+required>
 
-        <select id="payment">
+<input
+type="text"
+id="phone"
+placeholder="Phone Number"
+required>
 
-            <option>Cash On Delivery</option>
+<textarea
+id="address"
+placeholder="Full Address"
+required></textarea>
 
-            <option>UPI</option>
+<input
+type="text"
+id="city"
+placeholder="City"
+required>
 
-            <option>Credit Card</option>
+<input
+type="text"
+id="state"
+placeholder="State"
+required>
 
-            <option>Debit Card</option>
+<input
+type="text"
+id="pincode"
+placeholder="Pincode"
+required>
 
-        </select>
+<h3>Payment Method</h3>
 
-        <h2 id="orderTotal"></h2>
+<label>
 
-        <button type="submit">
-            Place Order
-        </button>
+<input
+type="radio"
+name="payment"
+value="COD"
+checked>
 
-    </form>
+Cash on Delivery
+
+</label>
+
+<label>
+
+<input
+type="radio"
+name="payment"
+value="UPI">
+
+UPI
+
+</label>
+
+<label>
+
+<input
+type="radio"
+name="payment"
+value="Card">
+
+Credit / Debit Card
+
+</label>
+
+<button type="submit">
+
+Place Order
+
+</button>
+
+</form>
 
 </div>
+
+<div class="checkout-summary">
+
+<h2>Order Summary</h2>
+
+<div id="orderSummary"></div>
+
+<hr>
+
+<h3>Total:
+
+<span id="totalPrice">
+
+₹0
+
+</span>
+
+</h3>
+
+<div class="secure-box">
+
+🔒 Secure Checkout
+
+</div>
+
+</div>
+
+</section>
 
 <script src="js/checkout.js"></script>
 
 </body>
+
 </html>

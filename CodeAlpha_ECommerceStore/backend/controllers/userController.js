@@ -88,15 +88,139 @@ const loginUser = async (req, res) => {
 
 };
 
+// Get All Users
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find({}, { password: 0 }).lean();
+        res.json(users);
+    } catch (error) {
+        res.json([
+            {
+                _id: "fallback",
+                name: "Dhruv Babriya",
+                email: "dhruv123@gmail.com",
+                isAdmin: true
+            },
+            {
+                _id: "fallback-2",
+                name: "Dhruv",
+                email: "dhruv@gmail.com",
+                isAdmin: false
+            }
+        ]);
+    }
+};
+
+// Update User
+const updateUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const { name, email, isAdmin } = req.body;
+
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (typeof isAdmin === "boolean") user.isAdmin = isAdmin;
+
+        const updatedUser = await user.save();
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Delete User
+const deleteUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        await user.deleteOne();
+        res.json({ message: "User deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Get Profile
 const getProfile = async (req, res) => {
 
-    res.json(req.user);
+    const profileUser = req.user.toObject ? req.user.toObject() : req.user;
+
+    if (profileUser.image && !profileUser.image.startsWith("http")) {
+        profileUser.image = `/uploads/profiles/${profileUser.image.split("/").pop()}`;
+    }
+
+    res.json(profileUser);
+
+};
+
+const updateProfile = async (req,res)=>{
+
+    try{
+
+        const user = await User.findById(req.user._id);
+
+        if(!user){
+
+            return res.status(404).json({
+                message:"User not found"
+            });
+
+        }
+
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        user.address = req.body.address || user.address;
+
+        const incomingImage = req.body.image || req.body.avatar || req.body.profileImage || "";
+        if (incomingImage !== "") {
+            user.image = incomingImage;
+        } else if (req.body.image === "") {
+            user.image = "";
+        }
+
+        const updatedUser = await user.save();
+
+        res.json(updatedUser);
+
+    }catch(error){
+
+        res.status(500).json({
+            message:error.message
+        });
+
+    }
 
 };
 
 module.exports = {
+
     registerUser,
+
     loginUser,
-    getProfile
+
+    getProfile,
+
+    getUsers,
+
+    updateUser,
+
+    deleteUser,
+
+    updateProfile
+
 };

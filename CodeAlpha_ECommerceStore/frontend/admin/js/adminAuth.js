@@ -2,6 +2,6 @@ const token = localStorage.getItem("token");
 const isAdmin = localStorage.getItem("isAdmin");
 
 if (!token || isAdmin !== "true") {
-    alert("Access Denied!");
-    window.location = "../login.html";
+    console.warn("Admin access denied; redirecting to login page.");
+    window.location.replace("../login.html");
 }

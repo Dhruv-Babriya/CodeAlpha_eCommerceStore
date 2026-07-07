@@ -1,35 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details</title>
 
-    <link rel="stylesheet" href="css/style.css">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Product Details</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
 </head>
 
 <body>
 
 <header>
 
-    <div class="logo">
-        <h2>🛒 CodeAlpha Store</h2>
-    </div>
+<div class="logo">
+<h2>🛒 CodeAlpha Store</h2>
+</div>
 
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="cart.html">Cart</a>
-    </nav>
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="cart.html">Cart</a>
+
+<a href="orders.html">Orders</a>
+
+<a href="profile.html">Profile</a>
+
+</nav>
 
 </header>
 
-<section class="product-details">
+<section class="product-page">
 
-    <div id="product-details"></div>
+<div class="product-image">
+
+<img id="productImage">
+
+</div>
+
+<div class="product-details">
+
+<h1 id="productName"></h1>
+
+<div class="rating">
+
+⭐⭐⭐⭐⭐
+<span>(4.8)</span>
+
+</div>
+
+<h2 id="productPrice"></h2>
+
+<p id="productDescription"></p>
+
+<h3 id="stockStatus"></h3>
+
+<div class="action-buttons">
+
+<button
+class="buy-btn"
+onclick="buyNow()">
+
+Buy Now
+
+</button>
+
+<button
+class="cart-btn"
+onclick="addCart()">
+
+Add to Cart
+
+</button>
+
+<button
+class="wishlist-btn"
+onclick="wishlist()">
+
+❤ Wishlist
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="specification">
+
+<h2>Specifications</h2>
+
+<ul>
+
+<li>Premium Quality</li>
+
+<li>1 Year Warranty</li>
+
+<li>Fast Delivery</li>
+
+<li>Secure Payment</li>
+
+<li>Easy Return Policy</li>
+
+</ul>
+
+</section>
+
+<section class="reviews">
+
+<h2>Customer Reviews</h2>
+
+<div class="review-card">
+
+⭐⭐⭐⭐⭐
+
+<p>
+
+Amazing Product!
+
+</p>
+
+<h4>- Rahul</h4>
+
+</div>
+
+<div class="review-card">
+
+⭐⭐⭐⭐⭐
+
+<p>
+
+Excellent Quality.
+
+</p>
+
+<h4>- Priya</h4>
+
+</div>
 
 </section>
 
 <script src="js/product.js"></script>
 
 </body>
+
 </html>

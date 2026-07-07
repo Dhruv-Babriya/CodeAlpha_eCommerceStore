@@ -1,117 +1,122 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const API="http://localhost:5000/api/products/";
 
-const cartItems = document.getElementById("cart-items");
+let cart=
+JSON.parse(localStorage.getItem("cart"))||[];
 
-const totalPrice = document.getElementById("total-price");
+const container=
+document.getElementById("cartContainer");
 
-function displayCart(){
+let subtotal=0;
 
-    cartItems.innerHTML = "";
+loadCart();
 
-    let total = 0;
+async function loadCart(){
 
-    if(cart.length === 0){
+container.innerHTML="";
 
-        cartItems.innerHTML = "<h2>Your cart is empty.</h2>";
+subtotal=0;
 
-        totalPrice.innerHTML = "Total : ₹0";
+for(const id of cart){
 
-        return;
+const response=
+await fetch(API+id);
 
-    }
+const product=
+await response.json();
 
-    cart.forEach((item,index)=>{
+subtotal+=product.price;
 
-        total += item.price * item.quantity;
+container.innerHTML+=`
 
-        cartItems.innerHTML += `
+<div class="cart-card">
 
-        <div class="cart-item">
+<img src="https://picsum.photos/200?random=${id}">
 
-            <div class="cart-left">
+<div class="cart-info">
 
-                <img src="https://via.placeholder.com/100">
+<h3>${product.name}</h3>
 
-                <div>
+<p>${product.description}</p>
 
-                    <h3>${item.name}</h3>
+<h2>₹${product.price}</h2>
 
-                    <p>₹${item.price}</p>
+<button
+class="remove-btn"
+onclick="removeItem('${id}')">
 
-                    <p>Quantity : ${item.quantity}</p>
+Remove
 
-                </div>
+</button>
 
-            </div>
+</div>
 
-            <div class="cart-buttons">
+</div>
 
-                <button onclick="increase(${index})">+</button>
-
-                <button onclick="decrease(${index})">-</button>
-
-                <button onclick="removeItem(${index})">
-                    Remove
-                </button>
-
-            </div>
-
-        </div>
-
-        `;
-
-    });
-
-    totalPrice.innerHTML = `Total : ₹${total}`;
+`;
 
 }
 
-function increase(index){
-
-    cart[index].quantity++;
-
-    saveCart();
+updateSummary();
 
 }
 
-function decrease(index){
+function removeItem(id){
 
-    if(cart[index].quantity > 1){
+cart=cart.filter(item=>item!==id);
 
-        cart[index].quantity--;
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
 
-    }
-
-    saveCart();
-
-}
-
-function removeItem(index){
-
-    cart.splice(index,1);
-
-    saveCart();
+loadCart();
 
 }
 
-function saveCart(){
+function updateSummary(){
 
-    localStorage.setItem("cart",JSON.stringify(cart));
+let shipping=100;
 
-    displayCart();
+let discount=0;
+
+document.getElementById("subtotal").innerHTML=
+"₹"+subtotal;
+
+document.getElementById("shipping").innerHTML=
+"₹"+shipping;
+
+document.getElementById("discount").innerHTML=
+"₹"+discount;
+
+document.getElementById("total").innerHTML=
+"₹"+(subtotal+shipping-discount);
 
 }
 
-function continueShopping(){
+function applyCoupon(){
 
-    window.location="index.html";
+const code=
+document.getElementById("coupon").value;
+
+if(code==="SAVE20"){
+
+document.getElementById("discount").innerHTML="₹20";
+
+document.getElementById("total").innerHTML=
+"₹"+(subtotal+100-20);
+
+alert("Coupon Applied!");
+
+}else{
+
+alert("Invalid Coupon");
+
+}
 
 }
 
 function checkout(){
 
-    window.location="checkout.html";
+window.location="checkout.html";
 
 }
-
-displayCart();

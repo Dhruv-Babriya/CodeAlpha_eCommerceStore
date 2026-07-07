@@ -45,27 +45,73 @@ function displayProducts(items){
 
         const displayData = getProductDisplayData(product);
 
-        container.innerHTML += `
+      container.innerHTML += `
 
-        <div class="product-card">
+<div class="product-card">
 
-            <img src="${displayData.image}" alt="">
+    <div class="badge">
+        -20%
+    </div>
 
-            <h3>${displayData.name}</h3>
+    <div
+        class="wishlist"
+        onclick="addWishlist('${product._id}')">
 
-            <p>${displayData.description}</p>
+        🤍
 
-            <h2>₹${displayData.price}</h2>
+    </div>
 
-            <button onclick="viewProduct('${product._id || product.id}')">
+    <img
+    src="https://picsum.photos/400/300?random=${product._id}">
 
-                View Details
+    <div class="product-info">
+
+        <small class="category">
+
+            ${product.category}
+
+        </small>
+
+        <h3>${product.name}</h3>
+
+        <p>${product.description}</p>
+
+        <div class="rating">
+
+            ⭐⭐⭐⭐⭐ (4.8)
+
+        </div>
+
+        <div class="price">
+
+            ₹${product.price}
+
+        </div>
+
+        <div class="buttons">
+
+            <button
+            onclick="viewProduct('${product._id}')">
+
+                Details
+
+            </button>
+
+            <button
+            class="cart-btn"
+            onclick="addCart('${product._id}')">
+
+                🛒 Cart
 
             </button>
 
         </div>
 
-        `;
+    </div>
+
+</div>
+
+`;
 
     });
 
@@ -128,5 +174,85 @@ function logout(){
     window.location="login.html";
 
 }
+
+function addWishlist(id){
+
+    let wishlist = JSON.parse(
+        localStorage.getItem("wishlist")
+    ) || [];
+
+    if(!wishlist.includes(id)){
+
+        wishlist.push(id);
+
+        localStorage.setItem(
+            "wishlist",
+            JSON.stringify(wishlist)
+        );
+
+        showToast("Added to Wishlist ❤️");
+
+    }else{
+
+        showToast("Already in Wishlist");
+
+    }
+
+}
+
+function addCart(id){
+
+    let cart = JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+    cart.push(id);
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    showToast("Added to Cart 🛒");
+
+}
+
+function showToast(message){
+
+    const toast = document.createElement("div");
+
+    toast.className = "toast";
+
+    toast.innerHTML = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(()=>{
+
+        toast.remove();
+
+    },2500);
+
+}
+
+const slides=document.querySelectorAll(".slide");
+
+let currentSlide=0;
+
+setInterval(()=>{
+
+slides[currentSlide].classList.remove("active");
+
+currentSlide++;
+
+if(currentSlide>=slides.length){
+
+currentSlide=0;
+
+}
+
+slides[currentSlide].classList.add("active");
+
+},4000);
 
 loadProducts();
