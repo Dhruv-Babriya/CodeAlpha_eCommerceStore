@@ -1,23 +1,59 @@
-if(!localStorage.getItem("token")){
+﻿const API = "http://localhost:5000/api/orders";
+const token = localStorage.getItem("token");
+const container = document.getElementById("orderContainer");
 
-    alert("Please login first");
-
-    window.location="login.html";
-
+if (!token) {
+    container.innerHTML = "<p>Please login to view your orders.</p>";
+} else {
+    loadOrders();
 }
 
-const container = document.getElementById("orders");
+async function loadOrders() {
+    try {
+        const response = await fetch(API, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
 
-container.innerHTML = `
-<div class="order-card">
+        const data = await response.json();
 
-<h2>Sample Order</h2>
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to load orders.");
+        }
 
-<p>Status : Pending</p>
+        const orders = Array.isArray(data) ? data : [];
 
-<p>Total : ₹1598</p>
+        container.innerHTML = "";
 
-<p>Payment : Cash On Delivery</p>
+        if (orders.length === 0) {
+            container.innerHTML = "<div class='empty-state'>No orders yet. Start shopping to see them here.</div>";
+            return;
+        }
 
-</div>
-`;
+        orders.forEach(order => {
+            const itemsMarkup = (order.orderItems || [])
+                .map(item => `
+                    <p>
+                        ${item.name || "Item"} × ${item.qty || 1} ₹${item.price || 0}
+                    </p>
+                `)
+                .join("");
+
+            container.innerHTML += `
+                <div class="order-card">
+                    <h3>Order ID: ${order._id}</h3>
+                    <p>Date: ${new Date(order.createdAt || Date.now()).toLocaleDateString()}</p>
+                    <p>Status: <b>${order.status || "Pending"}</b></p>
+
+                    <h3>Items</h3>
+                    ${itemsMarkup}
+
+                    <h2>Total: ₹${order.totalPrice || 0}</h2>
+                </div>
+            `;
+        });
+    } catch (error) {
+        container.innerHTML = `<p>${error.message}</p>`;
+    }
+}

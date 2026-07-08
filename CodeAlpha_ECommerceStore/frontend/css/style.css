@@ -1401,3 +1401,34 @@ font-size:35px;
 color:#2563EB;
 
 }
+
+
+.order-card{
+
+background:white;
+
+padding:25px;
+
+margin:20px;
+
+border-radius:15px;
+
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+
+}
+
+
+.order-card h3{
+
+color:#2563eb;
+
+}
+
+
+.order-card p{
+
+font-size:16px;
+
+color:#555;
+
+}

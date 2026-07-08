@@ -1,60 +1,108 @@
-const API="http://localhost:5000/api/products/";
+const API = "http://localhost:5000/api/products/";
+const ORDERS_API = "http://localhost:5000/api/orders";
 
-let cart=
-JSON.parse(localStorage.getItem("cart"))||[];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const summary=
-document.getElementById("orderSummary");
+const summary = document.getElementById("orderSummary");
 
-let total=0;
+let total = 0;
 
 loadSummary();
 
-async function loadSummary(){
+document.getElementById("checkoutForm").addEventListener("submit", placeOrder);
 
-summary.innerHTML="";
+async function loadSummary() {
+    summary.innerHTML = "";
+    total = 0;
 
-for(const id of cart){
+    for (const id of cart) {
+        const response = await fetch(API + id);
+        const product = await response.json();
 
-const response=
-await fetch(API+id);
+        total += product.price;
 
-const product=
-await response.json();
+        summary.innerHTML += `
+            <div class="summary-item">
+                <span>${product.name}</span>
+                <span>₹${product.price}</span>
+            </div>
+        `;
+    }
 
-total+=product.price;
-
-summary.innerHTML+=`
-
-<div class="summary-item">
-
-<span>${product.name}</span>
-
-<span>₹${product.price}</span>
-
-</div>
-
-`;
-
+    document.getElementById("totalPrice").innerHTML = "₹" + total;
 }
 
-document.getElementById("totalPrice").innerHTML=
-"₹"+total;
+async function placeOrder(e) {
+    e.preventDefault();
 
-}
+    const token = localStorage.getItem("token");
 
-document
-.getElementById("checkoutForm")
-.addEventListener("submit",placeOrder);
+    if (!token) {
+        alert("Please login before placing an order.");
+        window.location = "login.html";
+        return;
+    }
 
-function placeOrder(e){
+    if (!cart.length) {
+        alert("Your cart is empty.");
+        return;
+    }
 
-e.preventDefault();
+    const fullName = document.getElementById("fullname").value.trim();
+    const address = document.getElementById("address").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").value.trim();
+    const pincode = document.getElementById("pincode").value.trim();
+    const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
 
-alert("🎉 Order Placed Successfully!");
+    if (!fullName || !address || !city || !state || !pincode) {
+        alert("Please fill in your shipping details.");
+        return;
+    }
 
-localStorage.removeItem("cart");
+    try {
+        const orderItems = [];
 
-window.location="orders.html";
+        for (const id of cart) {
+            const response = await fetch(API + id);
+            if (!response.ok) {
+                throw new Error("Unable to load one or more products.");
+            }
 
+            const product = await response.json();
+            orderItems.push({
+                product: id,
+                name: product.name,
+                qty: 1,
+                price: product.price,
+                image: product.image || ""
+            });
+        }
+
+        const response = await fetch(ORDERS_API, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                orderItems,
+                totalPrice: total,
+                shippingAddress: `${address}, ${city}, ${state} - ${pincode}`,
+                paymentMethod
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Unable to place order.");
+        }
+
+        localStorage.removeItem("cart");
+        alert("🎉 Order Placed Successfully!");
+        window.location = "orders.html";
+    } catch (error) {
+        alert(error.message);
+    }
 }

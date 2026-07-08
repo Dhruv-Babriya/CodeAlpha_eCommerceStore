@@ -179,6 +179,12 @@ async function addWishlist(id){
 
     const token = localStorage.getItem("token");
 
+    if (!token) {
+        alert("Please login first to save items to your wishlist.");
+        window.location = "login.html";
+        return;
+    }
+
     const response = await fetch(
 
         `http://localhost:5000/api/users/wishlist/${id}`,
@@ -199,7 +205,12 @@ async function addWishlist(id){
 
     const data = await response.json();
 
-    alert(data.message);
+    if (!response.ok) {
+        alert(data.message || "Unable to add to wishlist.");
+        return;
+    }
+
+    alert(data.message || "Added to Wishlist");
 
 }
 

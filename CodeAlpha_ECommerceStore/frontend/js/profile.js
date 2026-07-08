@@ -67,17 +67,42 @@ try {
 
 }
 
-document.getElementById("cartCount").innerHTML=
+async function loadStats() {
+    const token = localStorage.getItem("token");
 
-(JSON.parse(localStorage.getItem("cart"))||[]).length;
+    if (!token) {
+        document.getElementById("cartCount").innerHTML = "0";
+        document.getElementById("wishlistCount").innerHTML = "0";
+        document.getElementById("orderCount").innerHTML = "0";
+        return;
+    }
 
-document.getElementById("wishlistCount").innerHTML=
+    try {
+        const wishlistResponse = await fetch("http://localhost:5000/api/users/wishlist", {
+            headers: { Authorization: `Bearer ${token}` }
+        });
 
-(JSON.parse(localStorage.getItem("wishlist"))||[]).length;
+        const wishlistData = wishlistResponse.ok ? await wishlistResponse.json() : [];
+        const wishlistCount = Array.isArray(wishlistData) ? wishlistData.length : 0;
 
-document.getElementById("orderCount").innerHTML=
+        const ordersResponse = await fetch("http://localhost:5000/api/orders", {
+            headers: { Authorization: `Bearer ${token}` }
+        });
 
-(JSON.parse(localStorage.getItem("orders"))||[]).length;
+        const ordersData = ordersResponse.ok ? await ordersResponse.json() : [];
+        const orderCount = Array.isArray(ordersData) ? ordersData.length : 0;
+
+        document.getElementById("cartCount").innerHTML = (JSON.parse(localStorage.getItem("cart")) || []).length;
+        document.getElementById("wishlistCount").innerHTML = wishlistCount;
+        document.getElementById("orderCount").innerHTML = orderCount;
+    } catch (error) {
+        document.getElementById("cartCount").innerHTML = (JSON.parse(localStorage.getItem("cart")) || []).length;
+        document.getElementById("wishlistCount").innerHTML = "0";
+        document.getElementById("orderCount").innerHTML = "0";
+    }
+}
+
+loadStats();
 
 async function updateProfile(){
 

@@ -8,7 +8,7 @@ const createOrder = async (req,res)=>{
 
             user:req.user._id,
 
-            products:req.body.products,
+            orderItems:req.body.orderItems,
 
             totalPrice:req.body.totalPrice,
 
@@ -18,7 +18,9 @@ const createOrder = async (req,res)=>{
 
         });
 
+
         res.status(201).json(order);
+
 
     }catch(error){
 
@@ -31,22 +33,27 @@ const createOrder = async (req,res)=>{
     }
 
 };
-
 // Get All Orders
-const getOrders = async (req, res) => {
+const getOrders = async(req,res)=>{
 
-    try {
+    try{
 
-        const orders = await Order.find()
-            .populate("user", "name email")
-            .populate("products.product", "name price");
+        const orders = await Order.find({
+            user:req.user._id
+        })
+        .populate("orderItems.product")
+        .sort({
+            createdAt:-1
+        });
+
 
         res.json(orders);
 
-    } catch (error) {
+
+    }catch(error){
 
         res.status(500).json({
-            message: error.message
+            message:error.message
         });
 
     }
