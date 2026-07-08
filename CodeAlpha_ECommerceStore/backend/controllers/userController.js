@@ -207,20 +207,116 @@ const updateProfile = async (req,res)=>{
 
 };
 
+const bcrypt = require("bcryptjs");
+
+const changePassword = async (req, res) => {
+    try {
+        const { oldPassword, newPassword } = req.body;
+
+        const user = await User.findById(req.user._id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const isMatch = await bcrypt.compare(
+            oldPassword,
+            user.password
+        );
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Old password is incorrect"
+            });
+        }
+
+        user.password = await bcrypt.hash(newPassword, 10);
+
+        await user.save();
+
+        res.json({
+            message: "Password changed successfully"
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            message: error.message
+        });
+
+    }
+};
+
+// Add Product to Wishlist
+const addToWishlist = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+
+        if (!user.wishlist.includes(req.params.productId)) {
+            user.wishlist.push(req.params.productId);
+            await user.save();
+        }
+
+        res.json({
+            message: "Added to Wishlist"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+// Get Wishlist
+const getWishlist = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id)
+            .populate("wishlist");
+
+        res.json(user.wishlist);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+// Remove Product from Wishlist
+const removeWishlist = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id);
+
+        user.wishlist = user.wishlist.filter(
+            item => item.toString() !== req.params.productId
+        );
+
+        await user.save();
+
+        res.json({
+            message: "Removed Successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 module.exports = {
-
     registerUser,
-
     loginUser,
-
     getProfile,
-
+    updateProfile,
+    changePassword,
     getUsers,
-
     updateUser,
-
     deleteUser,
-
-    updateProfile
-
+    addToWishlist,
+    getWishlist,
+    removeWishlist
 };

@@ -8,6 +8,8 @@ const productRoutes = require("./routes/productRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const couponRoutes = require("./routes/couponRoutes");
+
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 process.env.MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/ecommerce";
 
@@ -23,6 +25,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/coupons", couponRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 

@@ -7,14 +7,20 @@ const {
     loginUser,
     getProfile,
     updateProfile,
+    changePassword,
     getUsers,
     updateUser,
-    deleteUser
-}=require("../controllers/userController");
+    deleteUser,
+    addToWishlist,
+    getWishlist,
+    removeWishlist
+} = require("../controllers/userController");
 
 const {
     protect
 } = require("../middleware/authMiddleware");
+
+router.put("/change-password", protect, changePassword);
 
 // Register
 router.post("/register", registerUser);
@@ -28,6 +34,24 @@ router.put("/profile", protect, updateProfile);
 
 // Users list
 router.get("/", getUsers);
+
+router.post(
+    "/wishlist/:productId",
+    protect,
+    addToWishlist
+);
+
+router.get(
+    "/wishlist",
+    protect,
+    getWishlist
+);
+
+router.delete(
+    "/wishlist/:productId",
+    protect,
+    removeWishlist
+);
 
 // Update/Delete user
 router.put("/:id", updateUser);

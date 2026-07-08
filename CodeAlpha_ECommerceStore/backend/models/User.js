@@ -2,7 +2,14 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
-{
+{   
+    wishlist: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+    }
+    ],
+
     name: {
         type: String,
         required: true

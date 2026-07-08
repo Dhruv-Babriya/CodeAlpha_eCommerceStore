@@ -175,28 +175,31 @@ function logout(){
 
 }
 
-function addWishlist(id){
+async function addWishlist(id){
 
-    let wishlist = JSON.parse(
-        localStorage.getItem("wishlist")
-    ) || [];
+    const token = localStorage.getItem("token");
 
-    if(!wishlist.includes(id)){
+    const response = await fetch(
 
-        wishlist.push(id);
+        `http://localhost:5000/api/users/wishlist/${id}`,
 
-        localStorage.setItem(
-            "wishlist",
-            JSON.stringify(wishlist)
-        );
+        {
 
-        showToast("Added to Wishlist ❤️");
+            method: "POST",
 
-    }else{
+            headers: {
 
-        showToast("Already in Wishlist");
+                Authorization: `Bearer ${token}`
 
-    }
+            }
+
+        }
+
+    );
+
+    const data = await response.json();
+
+    alert(data.message);
 
 }
 

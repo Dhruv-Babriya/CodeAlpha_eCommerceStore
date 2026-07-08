@@ -152,6 +152,50 @@ console.log("Update Response:", data);
 
 }
 
+
+async function changePassword() {
+
+    const oldPassword =
+        document.getElementById("oldPassword").value;
+
+    const newPassword =
+        document.getElementById("newPassword").value;
+
+    const response = await fetch(
+        "http://localhost:5000/api/users/change-password",
+        {
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+
+            body: JSON.stringify({
+                oldPassword,
+                newPassword
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+
+        alert(data.message);
+
+        document.getElementById("oldPassword").value = "";
+        document.getElementById("newPassword").value = "";
+
+    } else {
+
+        alert(data.message);
+
+    }
+}
+
+
+
 function logout(){
 
 localStorage.clear();

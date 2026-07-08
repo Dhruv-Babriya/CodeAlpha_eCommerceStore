@@ -12,6 +12,16 @@ loadCart();
 
 async function loadCart(){
 
+const finalTotal =
+    total - (total * discount / 100);
+
+document.getElementById("total").innerHTML =
+`
+Original : ₹${total}<br>
+Discount : ${discount}%<br>
+Total : ₹${finalTotal.toFixed(2)}
+`;
+
 container.innerHTML="";
 
 subtotal=0;
@@ -112,6 +122,44 @@ alert("Coupon Applied!");
 alert("Invalid Coupon");
 
 }
+
+}
+
+let discount = 0;
+
+async function applyCoupon() {
+
+    const code =
+        document.getElementById("couponCode").value;
+
+    const response = await fetch(
+        "http://localhost:5000/api/coupons/apply",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({ code })
+        }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+
+        discount = data.discount;
+
+        alert(`Coupon Applied (${discount}% OFF)`);
+
+        loadCart();
+
+    } else {
+
+        alert(data.message);
+
+    }
 
 }
 
