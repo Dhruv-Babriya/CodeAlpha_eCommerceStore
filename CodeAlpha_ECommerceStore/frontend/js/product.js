@@ -24,11 +24,24 @@ product.stock>0?
 
 "❌ Out of Stock";
 
-document.getElementById("productImage").src=
+const imgEl = document.getElementById("productImage");
 
-"https://picsum.photos/600/500?random="+product._id;
+if (product.image) {
+
+    // product.image can be a full URL or a relative path (e.g. /uploads/products/xxx.jpg)
+
+    imgEl.src = product.image;
+
+} else {
+
+    // fallback placeholder
+
+    imgEl.src = "https://picsum.photos/600/500?random=" + product._id;
 
 }
+
+}
+
 
 function addCart(){
 

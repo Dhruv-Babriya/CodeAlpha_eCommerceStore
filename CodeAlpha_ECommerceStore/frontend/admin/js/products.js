@@ -1,4 +1,12 @@
 const API = "http://localhost:5000/api/products";
+const UPLOAD_API_BASE = "http://localhost:5000/api/upload";
+
+// attach token for protected upload routes
+function getAuthHeader() {
+    const token = localStorage.getItem("token");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 
 const table = document.getElementById("productTable");
 const form = document.getElementById("productForm");
@@ -75,11 +83,43 @@ async function saveProduct(e) {
         description: document.getElementById("description").value,
         price: Number(document.getElementById("price").value),
         stock: Number(document.getElementById("stock").value),
-        image: "placeholder.jpg"
+        image: document.getElementById("image").value.trim(),
 
     };
 
     try {
+
+        // If user selected a file and we are editing an existing product,
+        // upload file first and set product.image to uploaded file path.
+        const imageFileInput = document.getElementById("imageFile");
+        const file = imageFileInput && imageFileInput.files && imageFileInput.files[0];
+
+        if (editingId && file) {
+            const uploadRes = await fetch(`${UPLOAD_API_BASE}/products/${editingId}`, {
+                method: "POST",
+                headers: {
+                    ...getAuthHeader()
+                },
+                body: (() => {
+                    const fd = new FormData();
+                    fd.append("image", file);
+                    return fd;
+                })()
+            });
+
+
+            // If upload fails due to auth, show message
+            if (!uploadRes.ok) {
+                const err = await uploadRes.json().catch(() => ({}));
+                alert(err.message || "Image upload failed");
+                return;
+            }
+
+            const uploaded = await uploadRes.json();
+            if (uploaded && uploaded.image) {
+                product.image = uploaded.image;
+            }
+        }
 
         let response;
 
@@ -119,6 +159,7 @@ async function saveProduct(e) {
             return;
         }
 
+        const updatedEditingId = editingId;
         editingId = null;
 
         form.reset();
@@ -127,7 +168,22 @@ async function saveProduct(e) {
 
         alert("Product Saved Successfully!");
 
+        // If user is working on the same product details page, refresh it.
+        // Website product page uses localStorage.productId.
+        const updatedProductId = localStorage.getItem("productId");
+        if (updatedProductId && updatedProductId === String(updatedEditingId)) {
+            // force refresh to avoid cached image
+            try {
+                window.location.href = "../product.html";
+            } catch (e) {
+                // ignore
+            }
+        }
+
+
+
     } catch (error) {
+
 
         console.error(error);
 

@@ -43,18 +43,22 @@ async function loginUser(e){
 
     btn.classList.remove("loading");
 
-    if(response.ok){
+if(response.ok){
 
-    localStorage.setItem("token",data.token);
-    localStorage.setItem("userName",data.name);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("userName", data.name);
+    localStorage.setItem("isAdmin", data.isAdmin ? "true" : "false");
 
     showToast("Login Successful!");
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
-        window.location="index.html";
+        // If user tried to access admin page, redirect back. Otherwise go to website home.
+        const redirectTo = localStorage.getItem("postLoginRedirect") || "index.html";
+        localStorage.removeItem("postLoginRedirect");
+        window.location = redirectTo;
 
-    },1000);
+    }, 1000);
 
 }else{
 
@@ -63,6 +67,7 @@ async function loginUser(e){
 }
 
 }
+
 
 function togglePassword(){
 

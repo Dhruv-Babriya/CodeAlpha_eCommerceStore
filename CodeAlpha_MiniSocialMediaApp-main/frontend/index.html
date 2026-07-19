@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Mini Social Media</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Navigation Sidebar -->
+        <aside class="sidebar-left glass-card">
+            <div>
+                <div class="brand">
+                    <span>🌐 Connectify</span>
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="index.html" class="nav-link active" id="homeFeedNavLink">
+                                🏠 <span>Home Feed</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="toggleBookmarksFeed(event)" class="nav-link" id="bookmarksNavLink">
+                                🔖 <span>Bookmarks</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="profile.html" class="nav-link">
+                                👤 <span>Profile</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <div>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                    🌙
+                </button>
+                <div class="current-user-card" id="currentUserCard">
+                    <!-- Loaded dynamically by JS -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Feed -->
+        <main class="main-feed">
+            <!-- Active Hashtag Filter Panel (Hidden by default) -->
+            <div class="active-tag-filter" id="activeTagFilter" style="display: none;">
+                <span class="active-tag-text" id="activeTagText">Filtered by: #tag</span>
+                <button class="clear-tag-btn" onclick="clearTagFilter()">Clear Filter ✕</button>
+            </div>
+
+            <!-- Create Post Card -->
+            <div class="create-post-card glass-card">
+                <div class="create-post-header">
+                    <img src="" alt="Avatar" class="avatar" id="createPostUserAvatar">
+                    <textarea id="content" class="create-post-textarea" placeholder="What's on your mind? Share your story... (use #hashtags)" oninput="updateCharCount()"></textarea>
+                </div>
+                
+                <!-- Live Image Preview Container -->
+                <div class="post-img-preview-container" id="postImagePreviewContainer" style="display: none;">
+                    <img src="" alt="Preview" class="post-img-preview" id="postImagePreview">
+                    <button class="remove-preview-btn" onclick="removeImagePreview()" title="Remove Image">&times;</button>
+                </div>
+                
+                <div class="image-input-container">
+                    <span>📷</span>
+                    <input type="file" id="postImageFile" class="image-file-input" accept="image/*" onchange="handleImageFile(this.files[0])" />
+                    <input type="text" id="postImageUrl" class="image-url-input" placeholder="Optional Image URL (e.g. https://images.unsplash.com/... )" oninput="handleImageInput(this.value)" />
+                    <button class="image-preset-trigger" onclick="togglePresetPicker()" type="button">✨ Choose Preset</button>
+                </div>
+
+                <!-- Image Preset Grid -->
+                <div class="preset-images-grid" id="presetImagesGrid" style="display: none;">
+                    <!-- Populated dynamically by JS -->
+                </div>
+
+                <div class="create-post-actions">
+                    <span class="character-counter" id="charCounter">0 / 280</span>
+                    <button class="btn create-post-btn" onclick="createPost()">
+                        <span>Post</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feed Controls -->
+            <div class="feed-controls" id="feedControls">
+                <div class="feed-sort" aria-label="Feed sort">
+                    <button type="button" class="btn feed-sort-btn" id="sortForYouBtn" onclick="setFeedSort('forYou')">For You</button>
+                    <button type="button" class="btn btn-secondary feed-sort-btn" id="sortLatestBtn" onclick="setFeedSort('latest')">Latest</button>
+                </div>
+            </div>
+
+            <!-- Feed Posts List -->
+            <div id="posts">
+                <div class="glass-card post-card" style="text-align: center; color: var(--text-muted);">
+                    Loading feed...
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Right Suggestions Sidebar -->
+        <aside class="sidebar-right glass-card">
+            <h3 class="widget-title">Who to Follow</h3>
+            <div class="follow-suggestions-list" id="followSuggestions">
+                <!-- Populated dynamically by JS -->
+                <div style="color: var(--text-muted); font-size: 0.9rem; text-align: center;">Loading recommendations...</div>
+            </div>
+            
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 25px 0;">
+            
+            <h3 class="widget-title">Trending Today</h3>
+            <div class="trending-list" id="trendingTopics">
+                <!-- Populated dynamically in script.js -->
+                <div style="color: var(--text-muted); font-size: 0.85rem; text-align: center;">Loading trends...</div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
