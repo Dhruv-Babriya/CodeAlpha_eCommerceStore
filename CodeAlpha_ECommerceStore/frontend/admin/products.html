@@ -4,127 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Products</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="css/admin.css">
 </head>
 
 <body>
 
-<div class="sidebar">
+<button class="hamburger" id="hamburger" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
 
-    <h2>🛒 Admin Panel</h2>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <a href="dashboard.html">Dashboard</a>
-    <a href="products.html">Products</a>
-    <a href="orders.html">Orders</a>
-    <a href="../index.html">Website</a>
-    <a href="users.html">Users</a>
+<div class="sidebar" id="sidebar">
+
+  <div class="sidebar-header">
+    <div class="logo-icon">🛒</div>
+    <h2>Code<span>Alpha</span></h2>
+  </div>
+
+  <div class="sidebar-divider">Main Menu</div>
+
+  <a href="dashboard.html">
+    <i class="fas fa-chart-pie"></i> Dashboard
+  </a>
+
+  <a href="products.html" class="active">
+    <i class="fas fa-box"></i> Products
+  </a>
+
+  <a href="orders.html">
+    <i class="fas fa-truck"></i> Orders
+  </a>
+
+  <a href="users.html">
+    <i class="fas fa-users"></i> Users
+  </a>
+
+  <div class="sidebar-divider">Other</div>
+
+  <a href="../index.html">
+    <i class="fas fa-globe"></i> Website
+  </a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="sidebar-user-info">
+        <h4 id="adminName">Admin</h4>
+        <p>Administrator</p>
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <div class="content">
 
 <h1>Manage Products</h1>
+<p class="subtitle">Add, edit and manage your product inventory</p>
 
-<input
-type="text"
-id="search"
-placeholder="Search Product..."
->
+<div class="search-wrapper">
+  <i class="fas fa-search"></i>
+  <input type="text" id="search" placeholder="Search products...">
+</div>
 
-<br><br>
+<form id="productForm" style="background: #fff; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; margin-top: 20px;">
 
-<form id="productForm">
+  <h2 style="font-size: 20px; margin-bottom: 20px; color: #0f172a;">
+    <i class="fas fa-plus-circle" style="color: #6366f1;"></i> Add New Product
+  </h2>
 
-<input
-type="text"
-id="name"
-placeholder="Product Name"
-required
->
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="form-group">
+      <label><i class="fas fa-tag"></i> Product Name</label>
+      <input type="text" id="name" placeholder="Enter product name" required>
+    </div>
 
-<input
-type="text"
-id="category"
-placeholder="Category"
-required
->
+    <div class="form-group">
+      <label><i class="fas fa-folder"></i> Category</label>
+      <input type="text" id="category" placeholder="e.g. Electronics, Fashion" required>
+    </div>
 
-<input
-type="number"
-id="price"
-placeholder="Price"
-required
->
+    <div class="form-group">
+      <label><i class="fas fa-rupee-sign"></i> Price</label>
+      <input type="number" id="price" placeholder="0.00" required>
+    </div>
 
-<input
-type="number"
-id="stock"
-placeholder="Stock"
-required
->
+    <div class="form-group">
+      <label><i class="fas fa-cubes"></i> Stock</label>
+      <input type="number" id="stock" placeholder="0" required>
+    </div>
+  </div>
 
-<input
-type="file"
-id="imageFile"
-accept="image/*"
->
+  <div class="form-group">
+    <label><i class="fas fa-image"></i> Product Image</label>
+    <div class="image-upload">
+        <label class="drop-zone" id="dropZone" for="imageFile">
+            <div class="drop-zone-inner">
+                <p><i class="fas fa-cloud-upload-alt"></i> <strong>Upload Product Image</strong></p>
+                <p>Drag & drop JPG/JPEG/PNG/WEBP here</p>
+                <p>or click to browse</p>
+            </div>
+        </label>
 
-<input
-type="text"
-id="image"
-placeholder="(optional) Image URL if you don’t upload a file"
->
+        <input type="file" id="imageFile" name="image" accept="image/jpeg,image/jpg,image/png,image/webp" style="display:none">
 
+        <div id="imagePreviewWrap">
+            <img id="imagePreview" alt="Selected image preview" style="max-width:220px; max-height:180px; border-radius:12px;">
+            <div style="margin-top:10px;">
+                <button type="button" id="removeImageBtn"><i class="fas fa-trash"></i> Remove</button>
+            </div>
+        </div>
 
-<textarea
-id="description"
-placeholder="Description"
-required
-></textarea>
+        <div id="uploadProgressWrap">
+            <div class="progress-row">
+                <span id="uploadProgressLabel">Uploading... <span id="uploadPercent">0%</span></span>
+            </div>
+            <progress id="uploadProgress" value="0" max="100"></progress>
+            <div id="uploadSpinner" style="display:none; margin-top:10px;">⏳ Uploading...</div>
+        </div>
+    </div>
+  </div>
 
-<button type="submit">
+  <div class="form-group">
+    <label><i class="fas fa-link"></i> Image URL (optional)</label>
+    <input type="text" id="image" placeholder="Enter image URL if not uploading a file">
+  </div>
 
-Save Product
+  <div class="form-group">
+    <label><i class="fas fa-align-left"></i> Description</label>
+    <textarea id="description" placeholder="Enter product description" required></textarea>
+  </div>
 
-</button>
-
+  <button type="submit" class="btn btn-primary">
+    <i class="fas fa-save"></i> Save Product
+  </button>
 
 </form>
 
-<hr>
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Name</th>
-
-<th>Category</th>
-
-<th>Price</th>
-
-<th>Stock</th>
-
-<th>Action</th>
-
-</tr>
-
-</thead>
-
-<tbody id="productTable">
-
-</tbody>
-
-</table>
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="productTable">
+    </tbody>
+  </table>
+</div>
 
 </div>
 
 <script src="js/adminAuth.js"></script>
 <script src="js/products.js"></script>
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+</script>
 
 </body>
-
 </html>
+

@@ -36,9 +36,15 @@ async function loadWishlist() {
         }
 
         products.forEach(product => {
+            const imgSrc = product.image || "";
+            const imgUrl = imgSrc && imgSrc.startsWith("/uploads") ? `http://localhost:5000${imgSrc}` : (imgSrc || "https://via.placeholder.com/180");
             container.innerHTML += `
                 <div class="product-card">
-                    <img src="https://picsum.photos/300?random=${product._id}">
+                    <img
+                        src="${imgUrl}"
+                        loading="lazy"
+                        referrerpolicy="no-referrer"
+                        onerror="this.onerror=null;this.src='https://via.placeholder.com/180'">
                     <h3>${product.name}</h3>
                     <p>${product.description}</p>
                     <h2>₹${product.price}</h2>

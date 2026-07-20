@@ -23,6 +23,7 @@ async function loadDashboard() {
         setCardValue("productCount", data.products ?? 0);
         setCardValue("orderCount", data.orders ?? 0);
         setCardValue("userCount", data.users ?? 0);
+        setCardValue("revenueCount", "₹" + (data.revenue?.toLocaleString() || "0"));
     } catch (error) {
         console.error("Dashboard Error:", error);
         setCardValue("productCount", 0);

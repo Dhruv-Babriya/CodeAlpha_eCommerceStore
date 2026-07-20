@@ -3,11 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CodeAlpha E-Commerce Store - Shop the latest electronics, fashion, and more with amazing discounts. Fast delivery & secure payment.">
+    <meta name="keywords" content="ecommerce, online shopping, electronics, fashion, codealpha">
+    <meta name="author" content="CodeAlpha">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
     <title>CodeAlpha E-Commerce Store</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+
+<script>
+// Apply dark mode immediately to prevent flash
+if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+}
+function toggleDarkMode() {
+    const html = document.documentElement;
+    const body = document.body;
+    html.classList.toggle('dark-mode');
+    body.classList.toggle('dark-mode');
+    const isDark = html.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    const toggleBtn = document.querySelector('.dark-mode-toggle i');
+    if (toggleBtn) {
+        toggleBtn.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+}
+</script>
+
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
 <header>
 
@@ -28,6 +57,10 @@
         <a href="wishlist.html">Wishlist</a>
 
         <div id="authLinks"></div>
+        
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+            <i class="fas fa-moon"></i>
+        </button>
 
     </nav>
 
@@ -85,7 +118,7 @@
 
 </section>
 
-<section class="stats">
+<section class="stats fade-in">
 
 <div>
 
@@ -121,7 +154,7 @@
 
 </section>
 
-<section class="categories">
+<section class="categories fade-in-left">
 
     <h2>Popular Categories</h2>
 
@@ -171,7 +204,7 @@ Latest Products
 
 </section>
 
-<section class="testimonials">
+<section class="testimonials fade-in-right">
 
 <h2>What Our Customers Say</h2>
 
@@ -225,7 +258,7 @@ Best shopping experience.
 
 <script src="js/app.js"></script>
 
-<section class="newsletter">
+<section class="newsletter fade-in">
 
 <h2>Stay Updated</h2>
 
@@ -255,15 +288,51 @@ Subscribe
 
 <footer>
 
-<h2>CodeAlpha E-Commerce Store</h2>
+<div class="footer-grid">
 
-<br>
+    <div class="footer-col">
+        <h3>🛒 CodeAlpha Store</h3>
+        <p>Your premium online shopping destination. Quality products, fast delivery, and excellent customer service.</p>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
 
-<p>
+    <div class="footer-col">
+        <h3>Quick Links</h3>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="orders.html">Orders</a>
+        <a href="profile.html">Profile</a>
+        <a href="wishlist.html">Wishlist</a>
+    </div>
 
-© 2026 All Rights Reserved
+    <div class="footer-col">
+        <h3>Categories</h3>
+        <a href="#">Electronics</a>
+        <a href="#">Fashion</a>
+        <a href="#">Home & Living</a>
+        <a href="#">Mobiles</a>
+        <a href="#">Accessories</a>
+    </div>
 
-</p>
+    <div class="footer-col">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-envelope"></i> support@codealpha.store</p>
+        <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+        <p><i class="fas fa-map-marker-alt"></i> Mumbai, India</p>
+        <p><i class="fas fa-clock"></i> Mon-Sat: 9AM - 9PM</p>
+    </div>
+
+</div>
+
+<div class="footer-bottom">
+    <p>© 2026 CodeAlpha E-Commerce Store. All Rights Reserved.</p>
+</div>
 
 </footer>
 

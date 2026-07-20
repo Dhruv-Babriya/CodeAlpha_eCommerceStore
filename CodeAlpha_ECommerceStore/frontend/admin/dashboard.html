@@ -4,67 +4,128 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Dashboard</title>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="css/admin.css">
-
 </head>
 
 <body>
 
-<div class="sidebar">
+<button class="hamburger" id="hamburger" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
 
-<h2>🛒 Admin Panel</h2>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<a href="dashboard.html">Dashboard</a>
+<div class="sidebar" id="sidebar">
 
-<a href="products.html">Products</a>
+  <div class="sidebar-header">
+    <div class="logo-icon">🛒</div>
+    <h2>Code<span>Alpha</span></h2>
+  </div>
 
-<a href="orders.html">Orders</a>
+  <div class="sidebar-divider">Main Menu</div>
 
-<a href="users.html">Users</a>
+  <a href="dashboard.html" class="active">
+    <i class="fas fa-chart-pie"></i> Dashboard
+  </a>
 
-<a href="../index.html">Website</a>
+  <a href="products.html">
+    <i class="fas fa-box"></i> Products
+  </a>
+
+  <a href="orders.html">
+    <i class="fas fa-truck"></i> Orders
+    <span class="badge">3</span>
+  </a>
+
+  <a href="users.html">
+    <i class="fas fa-users"></i> Users
+  </a>
+
+  <div class="sidebar-divider">Other</div>
+
+  <a href="../index.html">
+    <i class="fas fa-globe"></i> Website
+  </a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="sidebar-user-info">
+        <h4 id="adminName">Admin</h4>
+        <p>Administrator</p>
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <div class="content">
 
-<h1>Dashboard</h1>
+  <h1>Dashboard</h1>
+  <p class="subtitle">Welcome back! Here's your store overview.</p>
 
-<div class="cards">
+  <div class="cards">
 
-<div class="card">
+    <div class="card">
+      <div class="card-icon blue">
+        <i class="fas fa-box"></i>
+      </div>
+      <h2 id="productCount">0</h2>
+      <p>Total Products</p>
+      <span class="trend up">
+        <i class="fas fa-arrow-up"></i> 12% this month
+      </span>
+    </div>
 
-<h2 id="productCount">0</h2>
+    <div class="card">
+      <div class="card-icon green">
+        <i class="fas fa-shopping-cart"></i>
+      </div>
+      <h2 id="orderCount">0</h2>
+      <p>Total Orders</p>
+      <span class="trend up">
+        <i class="fas fa-arrow-up"></i> 8% this month
+      </span>
+    </div>
 
-<p>Products</p>
+    <div class="card">
+      <div class="card-icon orange">
+        <i class="fas fa-users"></i>
+      </div>
+      <h2 id="userCount">0</h2>
+      <p>Total Users</p>
+      <span class="trend up">
+        <i class="fas fa-arrow-up"></i> 5% this month
+      </span>
+    </div>
 
-</div>
+    <div class="card">
+      <div class="card-icon red">
+        <i class="fas fa-dollar-sign"></i>
+      </div>
+      <h2 id="revenueCount">₹0</h2>
+      <p>Total Revenue</p>
+      <span class="trend up">
+        <i class="fas fa-arrow-up"></i> 15% this month
+      </span>
+    </div>
 
-<div class="card">
-
-<h2 id="orderCount">0</h2>
-
-<p>Orders</p>
-
-</div>
-
-<div class="card">
-
-<h2 id="userCount">0</h2>
-
-<p>Users</p>
-
-</div>
-
-</div>
+  </div>
 
 </div>
 
 <script src="js/adminAuth.js"></script>
 <script src="js/dashboard.js"></script>
-
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('active');
+}
+</script>
 
 </body>
-
 </html>
+

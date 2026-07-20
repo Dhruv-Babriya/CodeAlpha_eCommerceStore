@@ -1,302 +1,369 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --secondary: #06b6d4;
+  --success: #10b981;
+  --danger: #ef4444;
 }
 
-body{
-
-height:100vh;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-background:linear-gradient(135deg,#2563EB,#4F46E5,#06B6D4);
-
-overflow:hidden;
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-body::before{
-
-content:"";
-
-position:absolute;
-
-width:350px;
-height:350px;
-
-background:white;
-
-opacity:.1;
-
-border-radius:50%;
-
-top:-100px;
-left:-100px;
-
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 30%, #06b6d4 70%, #0891b2 100%);
+  overflow: hidden;
+  position: relative;
 }
 
-body::after{
-
-content:"";
-
-position:absolute;
-
-width:450px;
-height:450px;
-
-background:white;
-
-opacity:.08;
-
-border-radius:50%;
-
-bottom:-180px;
-right:-180px;
-
+/* Animated Background Shapes */
+body::before {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  top: -120px;
+  left: -120px;
+  animation: floatBlob 12s ease-in-out infinite;
 }
 
-.auth-card{
-
-width:420px;
-
-padding:45px;
-
-background:rgba(255,255,255,.18);
-
-backdrop-filter:blur(20px);
-
-border-radius:25px;
-
-box-shadow:0 20px 60px rgba(0,0,0,.25);
-
-border:1px solid rgba(255,255,255,.25);
-
-z-index:2;
-
+body::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+  bottom: -180px;
+  right: -180px;
+  animation: floatBlob2 15s ease-in-out infinite;
 }
 
-.auth-card h1{
-
-color:white;
-
-text-align:center;
-
-margin-bottom:10px;
-
-font-size:34px;
-
+@keyframes floatBlob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
 }
 
-.auth-card p{
-
-color:#e8f0ff;
-
-text-align:center;
-
-margin-bottom:35px;
-
+@keyframes floatBlob2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-30px, 30px) scale(1.05); }
+  66% { transform: translate(20px, -20px) scale(0.95); }
 }
 
-.input-group{
-
-margin-bottom:22px;
-
+/* Floating decorative shapes */
+.floating-shape {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.08;
 }
 
-.input-group input{
-
-width:100%;
-
-padding:15px;
-
-border:none;
-
-border-radius:12px;
-
-font-size:16px;
-
-outline:none;
-
-background:white;
-
+.floating-shape:nth-child(1) {
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  top: 20%;
+  left: 10%;
+  animation: floatBlob 8s ease-in-out infinite;
 }
 
-.auth-btn{
-
-width:100%;
-
-padding:15px;
-
-background:white;
-
-color:#2563EB;
-
-font-size:17px;
-
-font-weight:600;
-
-border:none;
-
-border-radius:12px;
-
-cursor:pointer;
-
-transition:.3s;
-
+.floating-shape:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  background: #fff;
+  bottom: 20%;
+  right: 15%;
+  animation: floatBlob2 10s ease-in-out infinite;
 }
 
-.auth-btn:hover{
-
-transform:translateY(-4px);
-
-box-shadow:0 15px 35px rgba(0,0,0,.25);
-
+.floating-shape:nth-child(3) {
+  width: 100px;
+  height: 100px;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  animation: floatBlob 6s ease-in-out infinite;
 }
 
-.bottom-text{
-
-margin-top:25px;
-
-text-align:center;
-
-color:white;
-
+/* Auth Card */
+.auth-card {
+  width: 420px;
+  padding: 45px 40px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 2;
+  animation: cardEntry 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.bottom-text a{
-
-color:#fff;
-
-font-weight:600;
-
-text-decoration:none;
-
+.auth-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  pointer-events: none;
 }
 
-
-/* Input Wrapper */
-
-.input-wrapper{
-    position:relative;
+@keyframes cardEntry {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.input-wrapper i{
-
-    position:absolute;
-
-    left:18px;
-    top:50%;
-
-    transform:translateY(-50%);
-
-    color:#2563EB;
-
-    font-size:18px;
-
+.auth-card h1 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 6px;
+  font-size: 32px;
+  font-weight: 700;
+  position: relative;
 }
 
-.input-wrapper input{
-
-    padding-left:50px;
-
+.auth-card > p {
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 15px;
+  position: relative;
 }
 
-/* Password Eye */
+/* Input Groups */
+.input-group {
+  margin-bottom: 22px;
+  position: relative;
+}
 
-.togglePassword{
+.input-wrapper {
+  position: relative;
+}
 
-    position:absolute;
+.input-wrapper i {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 18px;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
 
-    right:18px;
+.input-wrapper:focus-within i {
+  color: #fff;
+}
 
-    top:50%;
+.input-wrapper input {
+  width: 100%;
+  padding: 16px 18px;
+  padding-left: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  font-size: 15px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--dark);
+  transition: all 0.3s ease;
+}
 
-    transform:translateY(-50%);
+.input-wrapper input:focus {
+  border-color: #fff;
+  background: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: scale(1.01);
+}
 
-    cursor:pointer;
+.input-wrapper input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
 
-    color:#555;
+/* Toggle Password Eye */
+.togglePassword {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+  transition: color 0.3s ease;
+  font-size: 18px;
+}
 
+.togglePassword:hover {
+  color: var(--primary);
 }
 
 /* Validation */
-
-.error{
-
-    color:#ffdddd;
-
-    font-size:13px;
-
-    margin-top:8px;
-
+.error {
+  color: rgba(255, 200, 200, 0.9);
+  font-size: 12px;
+  margin-top: 8px;
+  padding-left: 4px;
+  display: none;
+  animation: shake 0.4s ease;
 }
 
-/* Loading Button */
+.error.show {
+  display: block;
+}
 
-.loading{
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
 
-pointer-events:none;
+/* Auth Button */
+.auth-btn {
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  color: var(--primary);
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
 
-opacity:.8;
+.auth-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
 
+.auth-btn:active {
+  transform: translateY(0);
+}
+
+/* Loading State */
+.auth-btn.loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.auth-btn.loading .btn-text {
+  visibility: hidden;
+}
+
+.auth-btn.loading::after {
+  content: '';
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--primary);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  position: absolute;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Bottom Text */
+.bottom-text {
+  margin-top: 25px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  position: relative;
+}
+
+.bottom-text a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 1px;
+}
+
+.bottom-text a:hover {
+  border-bottom-color: #fff;
 }
 
 /* Toast */
-
-.toast{
-
-position:fixed;
-
-top:25px;
-
-right:25px;
-
-background:#22c55e;
-
-color:white;
-
-padding:15px 25px;
-
-border-radius:12px;
-
-box-shadow:0 15px 30px rgba(0,0,0,.2);
-
-font-weight:600;
-
-animation:slide .4s ease;
-
-z-index:9999;
-
+.toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  padding: 16px 24px;
+  border-radius: 14px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(10px);
 }
 
-.toast.error{
-
-background:#ef4444;
-
+.toast.success {
+  background: linear-gradient(135deg, var(--success), #059669);
 }
 
-@keyframes slide{
-
-from{
-
-transform:translateX(120px);
-
-opacity:0;
-
+.toast.error {
+  background: linear-gradient(135deg, var(--danger), #dc2626);
 }
 
-to{
-
-transform:translateX(0);
-
-opacity:1;
-
+@keyframes slideIn {
+  from { transform: translateX(120px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
+/* Password Strength Indicator */
+.password-strength {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 0 4px;
 }
+
+.strength-bar {
+  height: 4px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.strength-bar.active.weak { background: var(--danger); }
+.strength-bar.active.medium { background: #f59e0b; }
+.strength-bar.active.strong { background: var(--success); }
+
+.strength-text {
+  font-size: 12px;
+  margin-top: 6px;
+  padding-left: 4px;
+  color: rgba(255, 255, 255, 0.6);
+}
+

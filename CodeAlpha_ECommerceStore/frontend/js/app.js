@@ -6,6 +6,28 @@ const search = document.getElementById("search");
 
 let products = [];
 
+// Show skeleton loading on page load
+function showSkeletons() {
+    if (!container) return;
+    container.innerHTML = `
+        <div class="skeleton-grid" id="skeletonGrid">
+            ${Array(8).fill(`
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text">
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line medium"></div>
+                        <div class="skeleton-line price"></div>
+                        <div class="skeleton-btn"></div>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+showSkeletons();
+
 async function loadProducts() {
 
     try {
@@ -18,6 +40,7 @@ async function loadProducts() {
 
         console.log(products);
 
+        console.log('Home products payload:', products);
         displayProducts(products);
 
     } catch (error) {
@@ -33,7 +56,8 @@ function getProductDisplayData(product) {
         name: product.name || product.title || "Untitled Product",
         description: product.description || product.desc || "No description available",
         price: Number(product.price ?? 0),
-        image: product.image || "https://via.placeholder.com/180"
+        image: product.image || "",
+        imageUrl: product.image && product.image.startsWith("/uploads") ? `http://localhost:5000${product.image}` : (product.image || "https://via.placeholder.com/180")
     };
 }
 
@@ -45,6 +69,9 @@ function displayProducts(items){
 
         const displayData = getProductDisplayData(product);
 
+        const imgSrc = displayData.imageUrl;
+
+
       container.innerHTML += `
 
 <div class="product-card">
@@ -54,15 +81,18 @@ function displayProducts(items){
     </div>
 
     <div
-        class="wishlist"
-        onclick="addWishlist('${product._id}')">
+    class="wishlist"
+    onclick="addWishlist('${product._id}')">
 
-        🤍
+    🤍
 
     </div>
 
     <img
-    src="https://picsum.photos/400/300?random=${product._id}">
+        src="${imgSrc}"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        onerror="this.onerror=null;this.src='https://via.placeholder.com/180'">
 
     <div class="product-info">
 
@@ -270,3 +300,60 @@ slides[currentSlide].classList.add("active");
 },4000);
 
 loadProducts();
+
+// ========== DARK MODE TOGGLE ==========
+function toggleDarkMode() {
+    const html = document.documentElement;
+    const body = document.body;
+    html.classList.toggle('dark-mode');
+    body.classList.toggle('dark-mode');
+    const isDark = html.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    
+    // Update toggle button icon
+    const toggleBtn = document.querySelector('.dark-mode-toggle i');
+    if (toggleBtn) {
+        toggleBtn.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+}
+
+// Load dark mode preference (applied by inline script in head, but this ensures body class is set too)
+if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+}
+
+// ========== BACK TO TOP ==========
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+        backToTopBtn?.classList.add('visible');
+    } else {
+        backToTopBtn?.classList.remove('visible');
+    }
+});
+
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== SCROLL ANIMATIONS ==========
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+        observer.observe(el);
+    });
+});

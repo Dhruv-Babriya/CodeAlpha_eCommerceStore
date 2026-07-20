@@ -38,14 +38,26 @@ const getOrders = async(req,res)=>{
 
     try{
 
-        const orders = await Order.find({
-            user:req.user._id
-        })
-        .populate("orderItems.product")
-        .sort({
-            createdAt:-1
-        });
+        let orders;
 
+        // If admin, return all orders with user info populated
+        if (req.user.isAdmin) {
+            orders = await Order.find({})
+                .populate("orderItems.product")
+                .populate("user", "name email")
+                .sort({
+                    createdAt:-1
+                });
+        } else {
+            // Regular users only see their own orders
+            orders = await Order.find({
+                user:req.user._id
+            })
+            .populate("orderItems.product")
+            .sort({
+                createdAt:-1
+            });
+        }
 
         res.json(orders);
 

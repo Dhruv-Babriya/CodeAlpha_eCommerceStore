@@ -59,8 +59,7 @@ setTimeout(()=>{
 
     window.location="login.html";
 
-},1000);
-        window.location="index.html";
+},1200);
 
     }else{
 

@@ -1,4 +1,24 @@
 const Product = require("../models/Product");
+const path = require("path");
+const fs = require("fs");
+
+const deleteProductImageIfExists = (imagePathOrUrl) => {
+    if (!imagePathOrUrl) return;
+
+    const uploadsPrefix = "/uploads/products/";
+    if (!imagePathOrUrl.includes(uploadsPrefix)) return;
+
+    const fileName = path.basename(imagePathOrUrl);
+    const fullPath = path.join(__dirname, "../uploads/products", fileName);
+
+    if (fs.existsSync(fullPath)) {
+        try {
+            fs.unlinkSync(fullPath);
+        } catch (e) {
+            console.error("Failed to delete product image:", e);
+        }
+    }
+};
 
 const normalizeProductData = (body = {}) => {
     const normalized = { ...body };
@@ -27,6 +47,7 @@ const addProduct = async (req, res) => {
     } catch (error) {
     console.error("Create Product Error:", error);
 
+
     res.status(500).json({
         message: error.message
     });
@@ -48,7 +69,7 @@ const getProducts = async (req, res) => {
             filter.category = category;
         }
 
-        const products = await Product.find(filter);
+        const products = await Product.find(filter).select("image name category price stock");
 
         res.json(products);
 
@@ -129,6 +150,10 @@ const deleteProduct = async (req, res) => {
                 message: "Product not found"
             });
         }
+
+        // Delete image file first
+        deleteProductImageIfExists(product.image);
+
 
         await product.deleteOne();
 

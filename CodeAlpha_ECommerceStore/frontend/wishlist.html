@@ -2,26 +2,54 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Your saved wishlist items at CodeAlpha Store. Browse and add favorite products to your cart.">
+<link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+<title>Wishlist - CodeAlpha Store</title>
 
-<title>Wishlist</title>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
 
 </head>
-
 <body>
+
+<script>
+// Apply dark mode immediately after body loads to prevent flash
+if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+}
+function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    const isDark = body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+    const toggleBtn = document.querySelector('.dark-mode-toggle i');
+    if (toggleBtn) {
+        toggleBtn.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
+}
+</script>
+
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
 <header>
 
-<h2>❤️ My Wishlist</h2>
+<div class="logo">
+<h2>🛒 CodeAlpha Store</h2>
+</div>
 
 <nav>
 
 <a href="index.html">Home</a>
-
 <a href="cart.html">Cart</a>
+<a href="profile.html">Profile</a>
+<button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+    <i class="fas fa-moon"></i>
+</button>
 
 </nav>
 

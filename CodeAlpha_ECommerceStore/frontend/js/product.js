@@ -9,6 +9,7 @@ async function loadProduct(){
 const response=await fetch(API+id);
 
 const product=await response.json();
+console.log('Product details payload:', product);
 
 document.getElementById("productName").innerHTML=product.name;
 
@@ -25,19 +26,22 @@ product.stock>0?
 "❌ Out of Stock";
 
 const imgEl = document.getElementById("productImage");
+imgEl.loading = "lazy";
+imgEl.referrerPolicy = "no-referrer";
+imgEl.onerror = () => {
+    imgEl.onerror = null;
+    imgEl.src = "https://via.placeholder.com/600x500";
+};
 
 if (product.image) {
-
-    // product.image can be a full URL or a relative path (e.g. /uploads/products/xxx.jpg)
-
-    imgEl.src = product.image;
-
+    // product.image is usually a relative path like /uploads/products/xxx.jpg
+    if (String(product.image).startsWith("/uploads")) {
+        imgEl.src = `http://localhost:5000${product.image}`;
+    } else {
+        imgEl.src = product.image;
+    }
 } else {
-
-    // fallback placeholder
-
-    imgEl.src = "https://picsum.photos/600/500?random=" + product._id;
-
+    imgEl.src = "https://via.placeholder.com/600x500";
 }
 
 }
@@ -57,9 +61,37 @@ alert("Added to Cart");
 
 }
 
-function wishlist(){
+async function wishlist(){
 
-alert("Added to Wishlist ❤️");
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("Please login first to add items to your wishlist.");
+        window.location = "login.html";
+        return;
+    }
+
+    try {
+        const response = await fetch(
+            `http://localhost:5000/api/users/wishlist/${id}`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || "Unable to add to wishlist.");
+            return;
+        }
+
+        alert(data.message || "Added to Wishlist ❤️");
+    } catch (error) {
+        alert("Failed to add to wishlist. Please try again.");
+    }
 
 }
 

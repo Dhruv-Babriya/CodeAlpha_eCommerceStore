@@ -25,30 +25,46 @@ const ensureDir = (dirPath) => {
     }
 };
 
+const crypto = require("crypto");
+
 const storage = multer.diskStorage({
     destination(req, file, cb) {
         const uploadPath = getUploadPath(req);
-        console.log("Upload Path:", uploadPath);
-        console.log("Folder Exists:", fs.existsSync(uploadPath));
         ensureDir(uploadPath);
         cb(null, uploadPath);
     },
 
     filename(req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
+        const ext = path.extname(file.originalname || "").toLowerCase();
+        const unique = crypto.randomBytes(16).toString("hex");
+        cb(null, `${Date.now()}-${unique}${ext}`);
     }
 });
 
 
+const ALLOWED_MIME = new Set([
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "image/webp"
+]);
+
+const ALLOWED_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+
 const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith("image/")) {
-        cb(null, true);
-    } else {
-        cb(new Error("Only image files are allowed"), false);
-    }
+    const mimeOk = ALLOWED_MIME.has(file.mimetype);
+    const ext = path.extname(file.originalname || "").toLowerCase();
+    const extOk = ALLOWED_EXT.has(ext);
+
+    if (mimeOk && extOk) return cb(null, true);
+
+    cb(new Error("Invalid image type. Allowed: JPG, JPEG, PNG, WEBP"), false);
 };
 
 module.exports = multer({
     storage,
-    fileFilter
+    fileFilter,
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB
+    }
 });
