@@ -6,16 +6,23 @@ const getStats = async (req, res) => {
 
     try {
 
-        const [products, orders, users] = await Promise.all([
+        const [products, orders, users, revenueResult] = await Promise.all([
             Product.countDocuments().catch(() => 0),
             Order.countDocuments().catch(() => 0),
-            User.countDocuments().catch(() => 0)
+            User.countDocuments().catch(() => 0),
+            Order.aggregate([
+                { $match: { status: { $ne: "Cancelled" } } },
+                { $group: { _id: null, total: { $sum: "$totalPrice" } } }
+            ]).catch(() => [])
         ]);
+
+        const revenue = revenueResult.length > 0 ? revenueResult[0].total : 0;
 
         res.json({
             products,
             orders,
-            users
+            users,
+            revenue
         });
 
     } catch (error) {
