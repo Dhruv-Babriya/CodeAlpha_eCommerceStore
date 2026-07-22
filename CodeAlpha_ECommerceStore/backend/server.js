@@ -45,7 +45,7 @@ app.use(express.static(frontendPath));
 app.use("/admin", express.static(path.join(frontendPath, "admin")));
 
 // For any route that doesn't match an API route, serve index.html (SPA-like fallback)
-app.get("*", (req, res) => {
+app.use((req, res) => {
     // Only serve index.html for non-API routes
     if (!req.path.startsWith("/api")) {
         res.sendFile(path.join(frontendPath, "index.html"));
