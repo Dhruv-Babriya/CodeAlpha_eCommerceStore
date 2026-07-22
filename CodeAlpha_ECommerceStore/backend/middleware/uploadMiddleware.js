@@ -25,6 +25,7 @@ const ensureDir = (dirPath) => {
     }
 };
 
+// Use Node.js built-in crypto module (DO NOT install npm 'crypto' package)
 const crypto = require("crypto");
 
 const storage = multer.diskStorage({
