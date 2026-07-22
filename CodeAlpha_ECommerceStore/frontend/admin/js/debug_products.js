@@ -1,4 +1,4 @@
-// NOTE: This file is for debugging only. It contains a safer, more transparent admin product create/update flow.
+  // NOTE: This file is for debugging only. It contains a safer, more transparent admin product create/update flow.
 // It should not be used in production.
 
 const API = "/api/products";

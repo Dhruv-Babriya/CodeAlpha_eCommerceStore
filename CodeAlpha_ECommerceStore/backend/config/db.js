@@ -11,9 +11,9 @@ const connectDB = async () => {
 
     } catch (error) {
 
-        console.log(error.message);
-
-        process.exit(1);
+        console.log("MongoDB Connection Error:", error.message);
+        // Don't exit process - let server start anyway for Railway
+        // The server will show errors on API calls but won't crash
 
     }
 };
