@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/products";
+const API = "/api/products";
 
 const container = document.getElementById("product-container");
 
@@ -57,7 +57,7 @@ function getProductDisplayData(product) {
         description: product.description || product.desc || "No description available",
         price: Number(product.price ?? 0),
         image: product.image || "",
-        imageUrl: product.image && product.image.startsWith("/uploads") ? `http://localhost:5000${product.image}` : (product.image || "https://via.placeholder.com/180")
+        imageUrl: product.image || "https://via.placeholder.com/180"
     };
 }
 
@@ -217,7 +217,7 @@ async function addWishlist(id){
 
     const response = await fetch(
 
-        `http://localhost:5000/api/users/wishlist/${id}`,
+        `/api/users/wishlist/${id}`,
 
         {
 

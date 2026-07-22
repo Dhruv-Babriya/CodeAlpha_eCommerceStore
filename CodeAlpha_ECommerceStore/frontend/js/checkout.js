@@ -1,5 +1,5 @@
-const API = "http://localhost:5000/api/products/";
-const ORDERS_API = "http://localhost:5000/api/orders";
+const API = "/api/products/";
+const ORDERS_API = "/api/orders";
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 

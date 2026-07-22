@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/users/profile";
+const API = "/api/users/profile";
 
 const token = localStorage.getItem("token");
 
@@ -11,7 +11,7 @@ function getAvatarUrl(user) {
         }
 
         const normalizedPath = imagePath.startsWith("/") ? imagePath : `/${imagePath}`;
-        return `http://localhost:5000${normalizedPath}`;
+        return normalizedPath;
     }
 
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}&background=2563EB&color=fff&size=200`;
@@ -78,14 +78,14 @@ async function loadStats() {
     }
 
     try {
-        const wishlistResponse = await fetch("http://localhost:5000/api/users/wishlist", {
+        const wishlistResponse = await fetch("/api/users/wishlist", {
             headers: { Authorization: `Bearer ${token}` }
         });
 
         const wishlistData = wishlistResponse.ok ? await wishlistResponse.json() : [];
         const wishlistCount = Array.isArray(wishlistData) ? wishlistData.length : 0;
 
-        const ordersResponse = await fetch("http://localhost:5000/api/orders", {
+        const ordersResponse = await fetch("/api/orders", {
             headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -119,7 +119,7 @@ async function updateProfile(){
         formData.append("image", file);
 
        const uploadResponse = await fetch(
-    "http://localhost:5000/api/upload/profile",
+    "/api/upload/profile",
     {
         method: "POST",
         headers: {
@@ -187,7 +187,7 @@ async function changePassword() {
         document.getElementById("newPassword").value;
 
     const response = await fetch(
-        "http://localhost:5000/api/users/change-password",
+        "/api/users/change-password",
         {
             method: "PUT",
 

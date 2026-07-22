@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/users/wishlist";
+const API = "/api/users/wishlist";
 
 const token = localStorage.getItem("token");
 
@@ -37,7 +37,7 @@ async function loadWishlist() {
 
         products.forEach(product => {
             const imgSrc = product.image || "";
-            const imgUrl = imgSrc && imgSrc.startsWith("/uploads") ? `http://localhost:5000${imgSrc}` : (imgSrc || "https://via.placeholder.com/180");
+            const imgUrl = imgSrc || "https://via.placeholder.com/180";
             container.innerHTML += `
                 <div class="product-card">
                     <img

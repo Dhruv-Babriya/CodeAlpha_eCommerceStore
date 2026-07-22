@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/admin/stats";
+const API = "/api/admin/stats";
 
 function setCardValue(id, value) {
     const element = document.getElementById(id);

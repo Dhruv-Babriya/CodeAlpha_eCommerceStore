@@ -1,5 +1,5 @@
-const API = "http://localhost:5000/api/products";
-const UPLOAD_API_BASE = "http://localhost:5000/api/upload";
+const API = "/api/products";
+const UPLOAD_API_BASE = "/api/upload";
 
 // attach token for protected upload routes
 function getAuthHeader() {

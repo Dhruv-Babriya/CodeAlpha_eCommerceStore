@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/users";
+const API = "/api/users";
 
 const table = document.getElementById("userTable");
 const search = document.getElementById("search");

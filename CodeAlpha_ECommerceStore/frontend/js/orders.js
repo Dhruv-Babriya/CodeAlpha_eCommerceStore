@@ -1,4 +1,4 @@
-﻿const API = "http://localhost:5000/api/orders";
+﻿const API = "/api/orders";
 const token = localStorage.getItem("token");
 const container = document.getElementById("orderContainer");
 

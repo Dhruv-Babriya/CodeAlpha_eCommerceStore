@@ -37,15 +37,22 @@ app.use(
     express.static(path.join(__dirname, "uploads"))
 );
 
+// Serve frontend static files from the parent directory's frontend folder
+const frontendPath = path.join(__dirname, "..", "frontend");
+app.use(express.static(frontendPath));
 
-app.get("/", (req, res) => {
-    res.send("E-Commerce API Running...");
+// Serve admin pages
+app.use("/admin", express.static(path.join(frontendPath, "admin")));
+
+// For any route that doesn't match an API route, serve index.html (SPA-like fallback)
+app.get("*", (req, res) => {
+    // Only serve index.html for non-API routes
+    if (!req.path.startsWith("/api")) {
+        res.sendFile(path.join(frontendPath, "index.html"));
+    } else {
+        res.status(404).json({ message: "API route not found" });
+    }
 });
-
-// Future Routes
-// app.use("/api/users", userRoutes);
-// app.use("/api/products", productRoutes);
-// app.use("/api/orders", orderRoutes);
 
 const PORT = process.env.PORT || 5000;
 

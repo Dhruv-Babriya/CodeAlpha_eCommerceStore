@@ -1,4 +1,4 @@
-const API = "http://localhost:5000/api/users/login";
+const API = "/api/users/login";
 
 document
 .getElementById("loginForm")

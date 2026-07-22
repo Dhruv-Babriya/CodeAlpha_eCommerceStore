@@ -1,4 +1,4 @@
-const API="http://localhost:5000/api/products/";
+const API="/api/products/";
 
 let cart=
 JSON.parse(localStorage.getItem("cart"))||[];
@@ -37,8 +37,7 @@ const qty = getItemQuantity(id);
 const itemTotal = product.price * qty;
 subtotal+=itemTotal;
 
-const imgSrc = product.image && product.image.startsWith("/uploads") ? `http://localhost:5000${product.image}` : (product.image || "https://via.placeholder.com/150");
-        const imgUrl = imgSrc && imgSrc.startsWith("/uploads") ? `http://localhost:5000${imgSrc}` : (imgSrc || "https://via.placeholder.com/150");
+const imgUrl = product.image || "https://via.placeholder.com/150";
         container.innerHTML+=`
 
 <div class="cart-card">
@@ -155,7 +154,7 @@ async function applyCoupon() {
     }
 
     const response = await fetch(
-        "http://localhost:5000/api/coupons/apply",
+        "/api/coupons/apply",
         {
             method: "POST",
 

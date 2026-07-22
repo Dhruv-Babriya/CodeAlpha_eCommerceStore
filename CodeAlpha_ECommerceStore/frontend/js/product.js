@@ -1,4 +1,4 @@
-const API="http://localhost:5000/api/products/";
+const API="/api/products/";
 
 const id=localStorage.getItem("productId");
 
@@ -34,12 +34,7 @@ imgEl.onerror = () => {
 };
 
 if (product.image) {
-    // product.image is usually a relative path like /uploads/products/xxx.jpg
-    if (String(product.image).startsWith("/uploads")) {
-        imgEl.src = `http://localhost:5000${product.image}`;
-    } else {
-        imgEl.src = product.image;
-    }
+    imgEl.src = product.image;
 } else {
     imgEl.src = "https://via.placeholder.com/600x500";
 }
@@ -72,7 +67,7 @@ async function wishlist(){
 
     try {
         const response = await fetch(
-            `http://localhost:5000/api/users/wishlist/${id}`,
+            `/api/users/wishlist/${id}`,
             {
                 method: "POST",
                 headers: {
